@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近在Windows Server Essentials體驗上搞了很久，起初是看到可以用Windows Server架設自己的多媒體網站，就想說來用用看，結果沒想到Windows Server 2016的Essentials體驗竟然不支援媒體擴充套件，只好降級回Server 2012 R2，但2012 R2一玩下去的問題又很多，後來是把他們都解決了，然而有些是莫名其妙就好了，猜不透，之後有空再寫一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WinSerEssentials體驗 之 如何讓 Remote Web Access 與 WordPress 共存">
+<meta property="og:url" content="https://blog.nesquate.tw/2017/11/25/winseressentials-remote-web-access-with-wordpress/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="最近在Windows Server Essentials體驗上搞了很久，起初是看到可以用Windows Server架設自己的多媒體網站，就想說來用用看，結果沒想到Windows Server 2016的Essentials體驗竟然不支援媒體擴充套件，只好降級回Server 2012 R2，但2012 R2一玩下去的問題又很多，後來是把他們都解決了，然而有些是莫名其妙就好了，猜不透，之後有空再寫一">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/01.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/02.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/03-1.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/04.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/05.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/06.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/07.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2018/06/08.png">
+<meta property="article:published_time" content="2017-11-25T01:09:47.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.487Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Remote Web Access">
+<meta property="article:tag" content="Windows Server Essentials">
+<meta property="article:tag" content="隨處存取">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.nesquate.tw/post_image/2018/06/01.png">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2017/11/25/winseressentials-remote-web-access-with-wordpress/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2017/11/25/winseressentials-remote-web-access-with-wordpress/","path":"2017/11/25/winseressentials-remote-web-access-with-wordpress/","title":"WinSerEssentials體驗 之 如何讓 Remote Web Access 與 WordPress 共存"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>WinSerEssentials體驗 之 如何讓 Remote Web Access 與 WordPress 共存 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9E%E5%AE%9A%E5%AF%A6%E9%AB%94%E8%B7%AF%E5%BE%91"><span class="nav-number">1.</span> <span class="nav-text">搞定實體路徑</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Platform-Installer-%E6%87%B6%E4%BA%BA%E6%90%9E%E5%AE%9A-WordPress"><span class="nav-number">2.</span> <span class="nav-text">Web Platform Installer 懶人搞定 WordPress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%B1%BA%E5%AE%89%E8%A3%9D%E5%BE%8C-Remote-Web-Access-%E7%9A%84403%E9%8C%AF%E8%AA%A4"><span class="nav-number">3.</span> <span class="nav-text">解決安裝後 Remote Web Access 的403錯誤</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2017/11/25/winseressentials-remote-web-access-with-wordpress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="WinSerEssentials體驗 之 如何讓 Remote Web Access 與 WordPress 共存 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WinSerEssentials體驗 之 如何讓 Remote Web Access 與 WordPress 共存
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2017-11-25 09:09:47" itemprop="dateCreated datePublished" datetime="2017-11-25T09:09:47+08:00">2017-11-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近在Windows Server Essentials體驗上搞了很久，起初是看到<a target="_blank" rel="noopener" href="https://dotblogs.com.tw/swater111/2013/05/09/103308">可以用Windows Server架設自己的多媒體網站</a>，就想說來用用看，結果沒想到<strong>Windows Server 2016的Essentials體驗竟然不支援媒體擴充套件</strong>，只好降級回Server 2012 R2，但2012 R2一玩下去的問題又很多，後來是把他們都解決了，然而有些是莫名其妙就好了，猜不透，之後有空再寫一篇心得文。 把Remote Web Access搞定之後，接下來就是想把WordPress裝在自己的電腦上，但這一塊讓我的腦袋徹底打結，原因是要設定的東西還真不少……。</p>
+<span id="more"></span>
+<h3 id="搞定實體路徑"><a href="#搞定實體路徑" class="headerlink" title="搞定實體路徑"></a>搞定實體路徑</h3><p>Remote Web Access在設定的過程中，會建立一些IIS的應用程式與虛擬目錄，並且會把Default Web Site的實體路徑改變。 當然這是Server 2012 R2以前的狀況，<strong>在Server 2016的實體路徑完全沒有變化</strong>，結果這樣反倒是造成一票人的困擾，因為不會自動導向（他們希望一連網址就是開啟Remote Web Access）。 那為什麼要改變預設路徑，當然是因為在C:\Program Files\Windows \Server\Bin\WebApps\Site路徑下管理網站頗不方便。 所以就，改吧。 <img src="/post_image/2018/06/01.png" alt="01"></p>
+<h3 id="Web-Platform-Installer-懶人搞定-WordPress"><a href="#Web-Platform-Installer-懶人搞定-WordPress" class="headerlink" title="Web Platform Installer 懶人搞定 WordPress"></a><a target="_blank" rel="noopener" href="https://www.microsoft.com/web/downloads/platform.aspx">Web Platform Installer</a> 懶人搞定 WordPress</h3><p>在IIS上安裝WordPress是非常非常非常麻煩的事情，你要設定PHP、MySQL還有URL Rewrite，一個一個設定會累死你自己。還好有Web Platform Installer可以搞定。 以下Web Platform Installer &#x3D; WebPI。 沒看過WebPI的其實不要害怕，因為真的超簡單，點個新增安裝就好了XD。 <img src="/post_image/2018/06/02.png" alt="02"> 安裝會要求輸入MySQL的帳號密碼，完事之後還要設定一下WordPress的「應用程式名稱」（應為網址上的子目錄），如果你想要打上網址就直接連到網站，那就空白吧。 <img src="/post_image/2018/06/03-1.png" alt="03"> 這樣設定一輪之後，WordPress就都好了。</p>
+<h3 id="解決安裝後-Remote-Web-Access-的403錯誤"><a href="#解決安裝後-Remote-Web-Access-的403錯誤" class="headerlink" title="解決安裝後 Remote Web Access 的403錯誤"></a>解決安裝後 Remote Web Access 的403錯誤</h3><p><img src="/post_image/2018/06/04.png" alt="04"> 安裝完WordPress之後，跑回去Remote Web Access一看，怎麼會403錯誤？ 後來查看Error訊息才發現URL rewrite把後面的字串傳給index.php了 :&lt;。 要解決這個問題，只能把URL rewrite好好設定一遍。 <img src="/post_image/2018/06/05.png" alt="05"> <img src="/post_image/2018/06/06.png" alt="06"> 找到在IIS管理員中的URL rewrite（請注意是在Default Web Site站台下點選），之後新增一個空白的輸入規則。 名稱可以隨便，比對URL中的樣式打「remote」且記得忽略大小寫，條件兩個－remote既不是檔案也不是目錄（他是IIS的應用程式），動作選擇「無」，最後記得勾選「停止處理後續規則」以避免此規則處理完後又處理後面的規則。 完整設定起來大概是這樣： <img src="/post_image/2018/06/07.png" alt="07"> 之後請不要忘記把新設定好的規則上移到最上面，他必須要優先處理。 <img src="/post_image/2018/06/08.png" alt="08"> <em>這樣Remote Web Access + WordPress的工作就大功告成，enjoy!</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Remote-Web-Access/" rel="tag"># Remote Web Access</a>
+              <a href="/tags/Windows-Server-Essentials/" rel="tag"># Windows Server Essentials</a>
+              <a href="/tags/%E9%9A%A8%E8%99%95%E5%AD%98%E5%8F%96/" rel="tag"># 隨處存取</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/10/10/vlc-m3u8-download/" rel="prev" title="VLC 抓取 .m3u8 線上串流影片的方法">
+                  <i class="fa fa-chevron-left"></i> VLC 抓取 .m3u8 線上串流影片的方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/01/04/html-learming-html-label/" rel="next" title="HTML 學習記錄  HTML 標籤及屬性">
+                  HTML 學習記錄  HTML 標籤及屬性 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

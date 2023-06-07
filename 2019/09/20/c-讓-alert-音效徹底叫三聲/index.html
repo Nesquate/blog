@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="計算機概論實習課時遇到的問題。 教授出了一個題目，要讓電腦Alert三次的音效聲，這題目看起來很簡單。原本的程式碼大概如下： 1(2023&#x2F;03&#x2F;30 整理更: 程式碼在部落格搬遷中不見了...)  但是電腦的運行速度真的是有夠快，這Alert三次很快就完成，所以實際上播出來的聲音就只有一次。 雖然助教在閱改的時候依然是算對，不過課堂上有不少人想要解決這個問題，不過後來都不試了。 我後來有查到一個">
+<meta property="og:type" content="article">
+<meta property="og:title" content="讓 Alert 音效徹底叫三聲">
+<meta property="og:url" content="https://blog.nesquate.tw/2019/09/20/c-%E8%AE%93-alert-%E9%9F%B3%E6%95%88%E5%BE%B9%E5%BA%95%E5%8F%AB%E4%B8%89%E8%81%B2/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="計算機概論實習課時遇到的問題。 教授出了一個題目，要讓電腦Alert三次的音效聲，這題目看起來很簡單。原本的程式碼大概如下： 1(2023&#x2F;03&#x2F;30 整理更: 程式碼在部落格搬遷中不見了...)  但是電腦的運行速度真的是有夠快，這Alert三次很快就完成，所以實際上播出來的聲音就只有一次。 雖然助教在閱改的時候依然是算對，不過課堂上有不少人想要解決這個問題，不過後來都不試了。 我後來有查到一個">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2019-09-20T08:16:00.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.483Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="C">
+<meta property="article:tag" content="Windows">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2019/09/20/c-%E8%AE%93-alert-%E9%9F%B3%E6%95%88%E5%BE%B9%E5%BA%95%E5%8F%AB%E4%B8%89%E8%81%B2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2019/09/20/c-%E8%AE%93-alert-%E9%9F%B3%E6%95%88%E5%BE%B9%E5%BA%95%E5%8F%AB%E4%B8%89%E8%81%B2/","path":"2019/09/20/c-讓-alert-音效徹底叫三聲/","title":"讓 Alert 音效徹底叫三聲"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>讓 Alert 音效徹底叫三聲 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%8C%E8%A8%98%EF%BC%9Awindows-h-%E7%9A%84%E6%9C%AA%E8%A7%A3%E4%B9%8B%E8%AC%8E"><span class="nav-number">1.</span> <span class="nav-text">後記：windows.h 的未解之謎</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2019/09/20/c-%E8%AE%93-alert-%E9%9F%B3%E6%95%88%E5%BE%B9%E5%BA%95%E5%8F%AB%E4%B8%89%E8%81%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="讓 Alert 音效徹底叫三聲 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          讓 Alert 音效徹底叫三聲
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2019-09-20 16:16:00" itemprop="dateCreated datePublished" datetime="2019-09-20T16:16:00+08:00">2019-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A8%8B%E5%BC%8F%E6%92%B0%E5%AF%AB/" itemprop="url" rel="index"><span itemprop="name">程式撰寫</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>計算機概論實習課時遇到的問題。</p>
+<p>教授出了一個題目，要讓電腦Alert三次的音效聲，這題目看起來很簡單。原本的程式碼大概如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(2023/03/30 整理更: 程式碼在部落格搬遷中不見了...)</span><br></pre></td></tr></table></figure>
+
+<p>但是電腦的運行速度真的是有夠快，這Alert三次很快就完成，所以實際上播出來的聲音就只有一次。</p>
+<p>雖然助教在閱改的時候依然是算對，不過課堂上有不少人想要解決這個問題，不過後來都不試了。</p>
+<p>我後來有查到一個方法，就給大家參考。</p>
+<p>方法就是－<strong>加入 sleep() 函數</strong>。</p>
+<p>加入 sleep () 函數之前要先引用標頭檔 windows.h (Windows) 或 unistd.h (Unix&#x2F;Linux)。</p>
+<p>加上後來學到的while迴圈，於是程式碼就變成下列這樣：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(2023/03/30 整理更: 程式碼在部落格搬遷中不見了...)</span><br></pre></td></tr></table></figure>
+
+<p>說明一下：</p>
+<ul>
+<li><p>建立兩個整數變數，time代表次數，sleeptime代表延遲時間</p>
+</li>
+<li><p>建立while迴圈，讓他alert響三次</p>
+</li>
+<li><p>time &lt; 4 代表 while 迴圈跑三次</p>
+</li>
+<li><p>sleep ( sleeptime ); - 指定延遲秒數</p>
+</li>
+<li><p>time &#x3D; time + 1; - 原本的次數加一次</p>
+</li>
+</ul>
+<p>後來發現第三次的時候程式會延遲三秒才正式結束，為了解決這個問題，於是又對程式做了改寫：</p>
+<p>程式碼意思就自己看了。</p>
+<h3 id="後記：windows-h-的未解之謎"><a href="#後記：windows-h-的未解之謎" class="headerlink" title="後記：windows.h 的未解之謎"></a>後記：windows.h 的未解之謎</h3><p>一開始我是在實驗室的電腦使用 windows.h 的標頭檔來使用 sleep () 函數，發現可以正常運行。</p>
+<p>於是後來就在自己的電腦上重現上述程式碼時就出現了幾個問題：</p>
+<ul>
+<li>Visual Studio 2019 打了之後會發生 sleep () 沒定義的狀況，後來去查了一下要用「Sleep ()」且「1000 &#x3D; 1 s」，這跟我的印象完全不一樣啊……</li>
+<li>後來就把Dev C++裝上去並且測試一下使用 windows.h 的狀況，發現依舊是沒定義，再度問號</li>
+<li>最後是用了 unistd.h 解決（沒想到Windows底下也可以用？）</li>
+</ul>
+<p>後來想起來實驗室的電腦有裝Code::Blocks，難道是跟Complier與Windows的環境變數（PATH）有關係嗎？這我目前還沒有答案……。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C</a>
+              <a href="/tags/Windows/" rel="tag"># Windows</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/11/19/%E8%B3%87%E6%BA%90-%E8%AE%93-xzp-%E8%A7%A3%E6%94%BE-pie-9-0-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8A%9F%E8%83%BD-magisk/" rel="prev" title="讓 XZP 解放(?) Pie 9.0 中的一些功能 (Magisk)">
+                  <i class="fa fa-chevron-left"></i> 讓 XZP 解放(?) Pie 9.0 中的一些功能 (Magisk)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/02/24/termux-ssh-%E9%80%A3%E7%B7%9A%E4%BA%8C%E4%B8%89%E4%BA%8B/" rel="next" title="Termux SSH 連線二三事">
+                  Termux SSH 連線二三事 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

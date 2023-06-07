@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="隨興寫寫">
+<meta property="og:type" content="website">
+<meta property="og:title" content="美代子隨筆">
+<meta property="og:url" content="https://blog.nesquate.tw/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="隨興寫寫">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Coding">
+<meta property="article:tag" content="Life">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-TW","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">美代子隨筆</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/04/19/ipad-%E9%8E%96%E5%AE%9A%E8%9E%A2%E5%B9%95%E5%BE%8C-wi-fi-%E6%9C%83%E8%87%AA%E5%8B%95%E6%96%B7%E7%B7%9A%E7%9A%84%E9%AC%BC%E6%95%85%E4%BA%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/19/ipad-%E9%8E%96%E5%AE%9A%E8%9E%A2%E5%B9%95%E5%BE%8C-wi-fi-%E6%9C%83%E8%87%AA%E5%8B%95%E6%96%B7%E7%B7%9A%E7%9A%84%E9%AC%BC%E6%95%85%E4%BA%8B/" class="post-title-link" itemprop="url">iPad 鎖定螢幕後 Wi-Fi 會自動斷線的鬼故事</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-04-19 19:15:55" itemprop="dateCreated datePublished" datetime="2023-04-19T19:15:55+08:00">2023-04-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>自從 3 月買了 iPad 之後，就一直發生很奇怪的事情－Wi-Fi 在鎖定螢幕之後自動斷線。 </p>
+<p>起初以為是 iPadOS 本身的機制，我也以為這是 iPad 省電神話的其中一部份。但後來想想不太對，畢竟隔壁棚的 iPhone 沒有聽過有人有類似的問題。 </p>
+<p>而且更奇怪的事情是，iPad 在學校連上學校的 Wi-Fi 竟然沒有發生鎖定螢幕後斷線的問題，於是決定去找看看是不是 RouterOS 的問題。 </p>
+<p>於是找到了 <a target="_blank" rel="noopener" href="https://forum.mikrotik.com/viewtopic.php?t=111359">MikroTik 官方論壇的討論串</a>，有人提出了很有意思的回答：</p>
+<blockquote>
+<p>What’s your DHCP lease time? Maybe it’s too low? If I recall correctly iOS doesn’t like very low DHCP lease times. You could raise the “Group Key Update” of your Security Profile to something like 1h. This should only be relevant to WPA2-EAP (as far as I know), but might be worth a try.</p>
+</blockquote>
+<p>跟我發生類似事情的事主於是回答：</p>
+<blockquote>
+<p>I haven’t changed anything in lease time for ages. It is set up to 00:10:00. As it comes to “Group Key Update” I can’t see anything like that at CAPsMAN… When APs were working separately it was set up to 00:05:00.</p>
+</blockquote>
+<p>先不管 CAPsMAN，我沒有搞這個，且我也沒有搞 WPA2-EAP，那問題就只剩下一個－DHCP lease time。 </p>
+<p>於是我去確定了一下 DHCP Server lease time，哇怎麼只有 10 分鐘……。 </p>
+<p>後來改成 23 小時，讓 iPad 放一個晚上，隔天醒來看，沒有自動斷線，看來問題就出在這裡。 </p>
+<p>我開始好奇 Apple 到底有沒有對 iPad 的 DHCP lease time 設定下限或上限，於是找到了 <a target="_blank" rel="noopener" href="https://support.apple.com/en-md/HT202068">Recommended settings for Wi-Fi routers and access points</a> 一文，並指出：</p>
+<blockquote>
+<p>DHCP lease time Set to 8 hours for home or office networks; 1 hour for hotspots or guest networks DHCP lease time is the length of time that an IP address assigned to a device is reserved for that device. Wi-Fi routers usually have a limited number of IP addresses that they can assign to devices on the network. If that number is depleted, the router can’t assign IP addresses to new devices, preventing those devices from communicating with other devices on the network and internet. Reducing DHCP lease time allows the router to more quickly reclaim and reassign old IP addresses that are no longer being used.</p>
+</blockquote>
+<p>看來 Lease time 只要設定 8 小時就好了，於是又改成 8 小時，目前沒有發生斷線狀況，不過還要再觀察看看……。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/04/03/%E7%94%A8-dockerfile-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E7%9A%84-freshrss-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%EF%BC%88php-fpm%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/03/%E7%94%A8-dockerfile-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E7%9A%84-freshrss-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%EF%BC%88php-fpm%EF%BC%89/" class="post-title-link" itemprop="url">用 Dockerfile 建立最小的 FreshRSS 運行環境（PHP-FPM）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-04-03 16:46:09" itemprop="dateCreated datePublished" datetime="2023-04-03T16:46:09+08:00">2023-04-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9E%B6%E7%AB%99%E7%9B%B8%E9%97%9C/" itemprop="url" rel="index"><span itemprop="name">架站相關</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://github.com/FreshRSS/FreshRSS">FreshRSS</a> 是自建 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/RSS">RSS</a> 訂閱蒐集網站的軟體，類似於 <a target="_blank" rel="noopener" href="https://feedly.com/">Feedly</a>。 </p>
+<p>最近會需要 RSS 的原因是社群網站越看越焦慮。雖然演算法會提供新奇的東西或文章給我看，不過我現在一來覺得社群網站的演算法，比起幫助人們找到與自己興趣相同的東西，更容易造成_集體焦慮_，於是我要設法找出突破集體焦慮的破口；另外一方面，我認為<strong>社群網站早已摧毀了人們閱讀長文、進一步思辨的能力</strong>（更好笑的是<a target="_blank" rel="noopener" href="https://g0v.social/@Nesquate/109804722780930842">這些人還會去指責另外一個平台</a>），覺得繼續這樣下去不行，於是<a href="https://blog.nesquate.tw/2023/03/30/%e4%bd%b5%e7%ab%99%e5%91%8a%e7%9f%a5/">自己開始整理過去所架設的部落格以及文章</a>，並重新開始執筆部落格，同樣的 RSS 也被我撿回來用。 </p>
+<p>儘管 Blog 和 RSS 是老東西，且接收的消息可能沒有社群網站這麼廣泛，但我知道現在的自己需要慢下來，且專注在我想要的東西上。 </p>
+<p>話題扯遠，來討論一下 FreshRSS 本身。 </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/FreshRSS/FreshRSS/tree/edge/Docker">FreshRSS 本身有提供 Docker Image</a>，但無論是 Debian Image 還是 Alpine Image，**兩個都包含了 <a target="_blank" rel="noopener" href="https://httpd.apache.org/">Apache HTTP Server</a>**，由於自己已經<a href="https://blog.nesquate.tw/2023/03/31/%e7%94%a8-docker-%e6%9e%b6-nginx-wordpress-php-fpm-mariadb-cdn-%e7%9a%84%e8%a8%98%e9%8c%84/">有還會幫我自簽 Let’s Encrypt TLS 憑證的 Nginx 容器</a>，因此根本就不需要再多一個 HTTP Server（更何況我已經不想要再搞 Reverse Proxy），於是決定自己搞一個 Docker Image。 </p>
+<p>翻閱 Docker 上的 <a target="_blank" rel="noopener" href="https://hub.docker.com/_/php">PHP Image 頁面</a>，以及 <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">Dockerfile 說明文件</a>之後，寫出以下 Dockerfile：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">FROM</span> php:fpm-alpine3.<span class="number">17</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">ENV</span> freshrss_url=<span class="string">&quot;https://github.com/FreshRSS/FreshRSS/archive/refs/tags/1.21.0.zip&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">RUN</span> apk add --no-cache \</span><br><span class="line">        <span class="attribute">zip</span> libzip-dev curl-dev libxml2-dev sqlite-dev postgresql-dev gmp-dev --virtual .buildeps\</span><br><span class="line">    &amp;&amp; <span class="attribute">docker</span>-php-ext-install -j <span class="string">&quot;$(nproc)&quot;</span> \</span><br><span class="line">        <span class="attribute">pdo_mysql</span> \</span><br><span class="line">        <span class="attribute">pdo_sqlite</span> \</span><br><span class="line">        <span class="attribute">pdo_pgsql</span> \</span><br><span class="line">        <span class="attribute">gmp</span> \</span><br><span class="line">        <span class="attribute">intl</span> \</span><br><span class="line">        <span class="attribute">zip</span> \</span><br><span class="line">    &amp;&amp; <span class="attribute">apk</span> del --purge .buildeps \</span><br><span class="line">    &amp;&amp; <span class="attribute">apk</span> add --no-cache gmp-dev icu-dev libpq-dev libzip</span><br><span class="line"></span><br><span class="line"><span class="attribute">RUN</span> curl -o freshrss.zip -L <span class="variable">$&#123;freshrss_url&#125;</span> \</span><br><span class="line">    &amp;&amp; <span class="attribute">unzip</span> freshrss.zip -d /var/www/html  \</span><br><span class="line">    &amp;&amp; <span class="attribute">mv</span> /var/www/html/FreshRSS-<span class="number">1</span>.<span class="number">21</span>.<span class="number">0</span>/* /var/www/html \</span><br><span class="line">    &amp;&amp; <span class="attribute">rm</span> -r /var/www/html/FreshRSS-<span class="number">1</span>.<span class="number">21</span>.<span class="number">0</span> \</span><br><span class="line">    &amp;&amp; <span class="attribute">rm</span> freshrss.zip</span><br><span class="line"></span><br><span class="line"><span class="attribute">CMD</span><span class="meta"> [ &quot;php-fpm&quot; ]</span></span><br></pre></td></tr></table></figure>
+
+<p>這些內容目前還只能算是雛型，因為我後來發現掛載 &#x2F;var&#x2F;www&#x2F;html 之後會把原本的東西給蓋掉。 </p>
+<p>至於 apk 安裝移除以及依賴的部份，第一次安裝是負責安裝編譯的依賴，因為 docker-php-ext-install 會需要編譯 PHP 模組；至於第二次安裝則是安裝運行 PHP 模組所需要的依賴，在 Try &amp; Error 的過程中會提示缺少的檔案，把檔名拿去 <a target="_blank" rel="noopener" href="https://pkgs.alpinelinux.org/packages">Alpine Linux packages 網頁</a>去搜尋就好。 </p>
+<p>用此 Dockerfile 產出的 Image 大概為 107 MB，也算夠小了。 Dockerfile 做完之後就可以寫 docker-compose.yml、Nginx 的 site.conf 了…。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/" class="post-title-link" itemprop="url">用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-03-31 15:41:19" itemprop="dateCreated datePublished" datetime="2023-03-31T15:41:19+08:00">2023-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9E%B6%E7%AB%99%E7%9B%B8%E9%97%9C/" itemprop="url" rel="index"><span itemprop="name">架站相關</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="釐清需求"><a href="#釐清需求" class="headerlink" title="釐清需求"></a>釐清需求</h3><ul>
+<li>需要有 HTTPS</li>
+<li><strong>不要再 Reverse Proxy 了</strong></li>
+<li>用 MariaDB</li>
+<li><strong>需要活用 CDN 做圖片快取</strong></li>
+</ul>
+<p>HTTPS 已經是現在網站的標配了，而用 MariaDB 只是單純討厭 Oracle…。</p>
+<p>至於 Reverse Proxy 的部分，以前在用 VPS 架設 WordPress 的時候，因為 PHP-FPM 與 Nginx 設定上的卡關，所以最後都用 Reverse Proxy 含糊過去。雖然架站速度也確實是快，但是因為容器內也有一個 HTTP Server，頗吃系統資源。</p>
+<p>最後一點是 CDN，由於之後想要藉由 WordPress 內的媒體庫功能管理所有媒體，所以希望在連上 &#x2F;wp-content 底下相關內容時可以將上傳的內容全部給 CDN 做快取。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/" class="post-title-link" itemprop="url">併站告知</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-03-30 18:37:38" itemprop="dateCreated datePublished" datetime="2023-03-30T18:37:38+08:00">2023-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%80%8B%E4%BA%BA%E6%83%B3%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">個人想法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>目前這個網站已經結合了以下網站的所有內容或部分內容：</p>
+<ul>
+<li><strong>我明白了，也許</strong> - 原名為「角落的視角」，創建於 2017&#x2F;10&#x2F;10 (WordPress -&gt; WordPress.com)</li>
+<li><strong>閒著來寫</strong> - 創建於 2018&#x2F;11&#x2F;02 (Blogger.com)</li>
+<li><strong>Nesquate</strong> - 創建於 2019&#x2F;09&#x2F;20 (WordPress -&gt; Hexo -&gt; Hugo)</li>
+<li><strong>美代子的部落格</strong> - 創建於 2021&#x2F;03&#x2F;10 (Hexo)</li>
+<li><strong>美代子隨筆</strong> - 創建於 2022&#x2F;05&#x2F;04 (WordPress -&gt; Hexo -&gt; 11ty -&gt; Hugo -&gt; WordPress)</li>
+</ul>
+<p>這可能還不是最終列表，若有新網站的被併入的話，此列表會更新。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/#more" rel="contents">
+                閱讀全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/03/09/kagi-3-15-%E8%99%9F%E5%BE%8C%E8%A6%81%E5%9F%B7%E8%A1%8C%E7%9A%84%E4%BB%98%E8%B2%BB%E6%96%B9%E6%A1%88%E8%AE%8A%E6%9B%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/03/09/kagi-3-15-%E8%99%9F%E5%BE%8C%E8%A6%81%E5%9F%B7%E8%A1%8C%E7%9A%84%E4%BB%98%E8%B2%BB%E6%96%B9%E6%A1%88%E8%AE%8A%E6%9B%B4/" class="post-title-link" itemprop="url">Kagi 3/15 號後要執行的付費方案變更</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-03-09 16:51:00" itemprop="dateCreated datePublished" datetime="2023-03-09T16:51:00+08:00">2023-03-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99/" itemprop="url" rel="index"><span itemprop="name">網路服務</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>才剛訂 Kagi 10 鎂無限搜尋方案不到一個月，官方說要改付費方案了…時間真不巧 XD（3&#x2F;15 起更動）</p>
+<p>免費搜尋額度:</p>
+<ul>
+<li>Free 50-&gt;100</li>
+<li>5 鎂是新增的方案，免費 200 次</li>
+<li>10 鎂 無限 -&gt; 免費 700 次</li>
+<li>25 鎂也是新的方案，這才是真的無限，其他服務會有優惠（？</li>
+</ul>
+<p><img src="/post_image/2023/kagi-change/plans.png"></p>
+<p>超過免費額度每搜尋一次 1.5 分（沒搞錯應該是 0.0015 鎂&#x2F;次 搞錯了，小數點後多一個0），好像繼續維持 10 鎂也夠用，畢竟這樣算的話要每搜尋超過 1000 次才會多 1.5 鎂（更正：100 次會多 1.5 鎂），希望我的度量衡認知不要雷到我</p>
+<p>舊版的方案會繼續到過期為止</p>
+<p>有趣的是 Kagi 在 <a target="_blank" rel="noopener" href="https://blog.kagi.com/update-kagi-search-pricing">Blog 文章</a> 說到 “99% of users search less than 200 times a month”（還附上來源），我還以為隨隨便便都超過 200 次（像我直到現在就已經 361 次搜尋了）</p>
+<p>在 Blog 文章還有提到家庭方案、之後要推動的生成式 AI 搜尋，這不在我感興趣的範圍，就沒多研究了（雖然同一篇文章都有講到）</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/10/12/git-%E9%81%A0%E7%AB%AF%E5%84%B2%E5%AD%98%E5%BA%AB%E5%BC%B7%E5%88%B6%E8%93%8B%E5%8F%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/12/git-%E9%81%A0%E7%AB%AF%E5%84%B2%E5%AD%98%E5%BA%AB%E5%BC%B7%E5%88%B6%E8%93%8B%E5%8F%B0/" class="post-title-link" itemprop="url">Git 遠端儲存庫強制蓋台</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-10-12 15:54:10" itemprop="dateCreated datePublished" datetime="2022-10-12T15:54:10+08:00">2022-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%A8%8B%E5%BC%8F%E6%92%B0%E5%AF%AB/" itemprop="url" rel="index"><span itemprop="name">程式撰寫</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>稍微記錄一下不然之後又忘記。</p>
+<p>原本 <code>im-nex.one</code> 是用 Hugo 靜態網頁產生器去做首頁，後來部落格決定搬來這位置之後，就想說把原本的 Hugo 蓋掉。</p>
+<p>但是我沒有先把儲存庫先 Clone 下來，所以有點麻煩。</p>
+<p>一開始我天真浪漫想說，阿就 <code>git clone --no-checkout</code> 就好了，這也是<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/38999901/clone-only-the-git-directory-of-a-git-repo">一開始找到的解法</a>。</p>
+<p>但是很快就遇到非空資料夾的問題 (Git 不允許在有資料的資料夾內 Clone Git 儲存庫)，所以後來參考了<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2411031/how-do-i-clone-into-a-non-empty-directory">另外一種解法</a>。</p>
+<p>自己的版本如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">先初始化本地的 Git 儲存庫</span></span><br><span class="line">git init</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">記得要蓋台分支名稱要跟遠端儲存庫上的一致，否則在 push 階段要手動指定</span></span><br><span class="line">git branch -m main</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新增遠端儲存庫</span></span><br><span class="line">git remote add origin &lt;remote_url&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然後把遠端儲存庫先抓下來，但不合併或 checkout</span></span><br><span class="line">git fetch</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 然後就是做各種 commit 等操作，最後上傳的時候要加上 `-f` 參數</span></span></span><br><span class="line">git push --set-upstream orign -f</span><br></pre></td></tr></table></figure>
+
+<p>這樣就強制蓋台成功了，不過強制蓋台意味著上面原本的資料也會不見，所以請先做好備份。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/10/10/debian-%E5%BE%9E-sid-%E5%88%B0-experimental-%E5%88%B0-linux-6-0-rc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/10/10/debian-%E5%BE%9E-sid-%E5%88%B0-experimental-%E5%88%B0-linux-6-0-rc/" class="post-title-link" itemprop="url">Debian 從 sid 到 Experimental 到 Linux 6.0 RC</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-10-10 15:52:10" itemprop="dateCreated datePublished" datetime="2022-10-10T15:52:10+08:00">2022-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>為了安裝 Linux 6.0 的紀錄。</p>
+<p>這邊只介紹官方作法，也只推薦官方作法，因為單獨安裝首先會碰到套件依賴問題。由於 Debian 需要將更新頻道切換到 <code>experimental</code> 才可以安裝最新版的 Linux Kernel 6.0，且要使用 <code>experimental</code> 頻道之前系統必須要在 <code>sid</code> 更新頻道的狀態，等於說要切換兩次更新頻道。</p>
+<p>首先先修改 <code>/etc/apt/source.list</code>，把 <code>bullseye</code> 換成 <code>sid</code>，只要改第一個 <code>deb</code> 和 <code>deb-src</code> 就好。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http://debian.cs.nctu.edu.tw/debian/ sid main</span><br><span class="line">deb-src http://debian.cs.nctu.edu.tw/debian/ sid main</span><br></pre></td></tr></table></figure>
+
+<p>然後直接做系統全更新。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt update</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt full-upgrade</span></span><br></pre></td></tr></table></figure>
+
+<p>讓 <code>apt</code> 把更新一次跑完後重開機，就會是 <code>sid</code> 更新頻道的狀態了。</p>
+<p>接著再次修改 <code>/etc/apt/source.list</code>，把 <code>sid</code> 換成 <code>experimental</code>，同樣也是只要改第一個 <code>deb</code> 和 <code>deb-src</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">deb http://debian.cs.nctu.edu.tw/debian/ experimental main</span><br><span class="line">deb-src http://debian.cs.nctu.edu.tw/debian/ experimental main</span><br></pre></td></tr></table></figure>
+
+<p>然後安裝最新版 Linux Kernel，截至本文時間 Debian 最新版本為 Linux 6.0-rc7。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt update</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">apt -t experimental install linux-image-6.0.0-rc7-amd64</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-t</code> 參數讓 <code>apt</code> 可以在指定的更新頻道上搜尋 or 安裝套件，雖然 Debian 官方 Wiki 上表示可以修改權重來達成以後都不需要帶入 <code>-t</code> 參數，但個人不建議，主要是因為 <code>experimental</code> 更新頻道比起 <code>sid</code> 更不穩定，隨時都會有系統爆炸的危險。</p>
+<p>如果要搜尋到 <code>experimental</code> 更新頻道上的套件，那在下 <code>apt search</code> 的時候也要帶上 <code>-t</code> 參數。</p>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://wiki.debian.org/DebianExperimental">DebianExperimental (Debian Wiki)</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/08/21/%E4%B8%8D%E5%9C%A8%E5%88%86%E5%89%B2%E8%A1%A8%E4%B8%8A%E7%9A%84-ext4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/08/21/%E4%B8%8D%E5%9C%A8%E5%88%86%E5%89%B2%E8%A1%A8%E4%B8%8A%E7%9A%84-ext4/" class="post-title-link" itemprop="url">不在分割表上的 ext4</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-08-21 15:59:00" itemprop="dateCreated datePublished" datetime="2022-08-21T15:59:00+08:00">2022-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>我已經忘記我當初是怎麼分割資料碟了，只知道是跟 EndeavourOS 安裝的時候一起格式化。</p>
+<p>最近因為遊戲需求逐漸增加而把 Windows 灌回自己的 Laptop，把兩顆硬碟都分一半，結果在 Windows 操作磁碟工具時提示「磁碟初始化」的訊息。</p>
+<p>因為自己不記得自己曾經幹了啥事，所以直接回到 Linux 去看發生什麼事。</p>
+<p>首先是 GParted，發現怎麼縮小分割，最後都會變成最大（嘗試 e2fsck 後都會跑 resize2fs，超怪），然後就跑去 Google 一下 ext4 without partition table 的狀況，找到這篇 <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/346826/is-it-ok-to-mkfs-without-partition-number" title="StackExchange">StackExchange</a>，裡面的最佳解答如下：</p>
+<blockquote>
+<p>Creating a filesystem on a whole disk rather than a partition is possible, but unusual. The documentation only explicitly mentions the partition because that’s the most usual case (it does say usually). You can create a filesystem on anything that acts sufficiently like a fixed-size file, i.e. something where if you write data at a certain location and read back from the same location then you get back the same data. This includes whole disks, disk partitions, and other kinds of block devices, as well as regular files (disk images).</p>
+<p>After doing mkfs.fat -n A &#x2F;dev&#x2F;sdb, you no longer have a partition on that disk. Beware that the kernel still thinks that the disk has a partition, because it keeps the partition table cached in memory. But you shouldn’t try to use &#x2F;dev&#x2F;sdb1 anymore, since it no longer exists; writing to it would corrupt the filesystem you created on &#x2F;dev&#x2F;sdb since &#x2F;dev&#x2F;sdb1 is a part of &#x2F;dev&#x2F;sdb (everything except a few hundred bytes at the beginning). Run the command partprobe as root to tell the kernel to re-read the partition table.</p>
+<p>While creating a filesystem on a whole disk is possible, I don’t recommend it. Some operating systems may have problems with it (I think Windows would cope but some devices such as cameras might not), and you lose the possibility of creating other partitions. See also <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/14010/the-merits-of-a-partitionless-filesystem">The merits of a partitionless filesystem</a></p>
+</blockquote>
+<p>再點進去解答者提供的連結，看了一下，原來 Oracle VM 也這樣幹…。</p>
+<p>後來去 <code>lsblk</code> 看一下，<code>sda</code> 後面沒號碼是直接整個掛起來的：</p>
+<p><img src="/post_image/2022/ext4-not-in-partition-table/Screenshot_20220821_200036.png"></p>
+<p>然後再去 <code>/etc/fstab</code> 看一下，因為我當初直接用 GNOME 提供的磁碟工具來掛載，不知道裡面寫了啥，所以要檢查一下：</p>
+<p><img src="/post_image/2022/ext4-not-in-partition-table/Screenshot_20220821_200154.png"></p>
+<p>好吧，當初用 UUID 的方式掛起來。不過我對我當初怎麼分割成這樣已經完全沒有任何印象了 lol</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/07/31/minecraft-%E6%94%B9%E5%AD%98%E6%AA%94%E5%90%8D%E7%A8%B1%EF%BC%8C%E8%AB%8B%E7%95%99%E6%84%8F%E4%B8%80%E4%B8%8B-level-dat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/31/minecraft-%E6%94%B9%E5%AD%98%E6%AA%94%E5%90%8D%E7%A8%B1%EF%BC%8C%E8%AB%8B%E7%95%99%E6%84%8F%E4%B8%80%E4%B8%8B-level-dat/" class="post-title-link" itemprop="url">Minecraft 改存檔名稱，請留意一下 level.dat...</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-31 16:24:00" itemprop="dateCreated datePublished" datetime="2022-07-31T16:24:00+08:00">2022-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Minecraft/" itemprop="url" rel="index"><span itemprop="name">Minecraft</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>會有這問題，主要是因為我經營的伺服器所使用的 <a target="_blank" rel="noopener" href="https://github.com/Xujiayao/MCDiscordChat">MCDiscordChat</a> 在我更改存檔資料夾的名稱之後經常噴錯：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[01:13:37] [Timer-2/ERROR]: Uncaught exception in thread &quot;Timer-2&quot;</span><br><span class="line">java.io.UncheckedIOException: RealmsMain/stats</span><br><span class="line">    at org.apache.commons.io.FileUtils.listFiles(FileUtils.java:2153) ~[commons-io-2.11.0.jar:?]</span><br><span class="line">    at top.xujiayao.mcdiscordchat.utils.Utils$2.run(Utils.java:255) ~[MCDiscordChat-1.19-2.0.0-alpha.5.jar:?]</span><br><span class="line">    at java.util.TimerThread.mainLoop(Unknown Source) ~[?:?]</span><br><span class="line">    at java.util.TimerThread.run(Unknown Source) ~[?:?]</span><br><span class="line">Caused by: java.nio.file.NoSuchFileException: RealmsMain/stats</span><br><span class="line">    at sun.nio.fs.UnixException.translateToIOException(Unknown Source) ~[?:?]</span><br><span class="line">    at sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source) ~[?:?]</span><br><span class="line">    at sun.nio.fs.UnixException.rethrowAsIOException(Unknown Source) ~[?:?]</span><br><span class="line">    at sun.nio.fs.UnixFileAttributeViews$Basic.readAttributes(Unknown Source) ~[?:?]</span><br><span class="line">    at sun.nio.fs.UnixFileSystemProvider.readAttributes(Unknown Source) ~[?:?]</span><br><span class="line">    at sun.nio.fs.LinuxFileSystemProvider.readAttributes(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.Files.readAttributes(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.FileTreeWalker.getAttributes(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.FileTreeWalker.visit(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.FileTreeWalker.walk(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.FileTreeIterator.&lt;init&gt;(Unknown Source) ~[?:?]</span><br><span class="line">    at java.nio.file.Files.walk(Unknown Source) ~[?:?]</span><br><span class="line">    at org.apache.commons.io.file.PathUtils.walk(PathUtils.java:1044) ~[commons-io-2.11.0.jar:?]</span><br><span class="line">    at org.apache.commons.io.FileUtils.streamFiles(FileUtils.java:2971) ~[commons-io-2.11.0.jar:?]</span><br><span class="line">    at org.apache.commons.io.FileUtils.listFiles(FileUtils.java:2151) ~[commons-io-2.11.0.jar:?]</span><br><span class="line">    ... 3 more</span><br></pre></td></tr></table></figure>
+
+<p>雖然不影響伺服器啟動過程，但有點礙眼。</p>
+<p>奇怪，我明明就把存檔名稱從 <code>RealmsMain</code> 改叫做 <code>Main</code> 了，怎麼還跑去找 <code>RealmsMain</code>？</p>
+<p>根據 Exception 訊息，跑去看 <code>top.xujiayao.mcdiscordchat.utils.Utils</code> 的第 255 行左右的程式碼，內容是這樣的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">topic</span> <span class="operator">=</span> TEXTS.onlineChannelTopic()</span><br><span class="line">                        .replace(<span class="string">&quot;%onlinePlayerCount%&quot;</span>, Integer.toString(SERVER.getPlayerManager().getPlayerList().size()))</span><br><span class="line">                        .replace(<span class="string">&quot;%maxPlayerCount%&quot;</span>, Integer.toString(SERVER.getPlayerManager().getMaxPlayerCount()))</span><br><span class="line">                        <span class="comment">//#if MC &gt;= 11600</span></span><br><span class="line">                        .replace(<span class="string">&quot;%uniquePlayerCount%&quot;</span>, Integer.toString(FileUtils.listFiles(<span class="keyword">new</span> <span class="title class_">File</span>((SERVER.getSaveProperties().getLevelName() + <span class="string">&quot;/stats/&quot;</span>)), <span class="literal">null</span>, <span class="literal">false</span>).size()))</span><br><span class="line">                        <span class="comment">//#else</span></span><br><span class="line">                        <span class="comment">//$$ .replace(&quot;%uniquePlayerCount%&quot;, Integer.toString(FileUtils.listFiles(new File((SERVER.getLevelName() + &quot;/stats/&quot;)), null, false).size()))</span></span><br><span class="line">                        <span class="comment">//#endif</span></span><br><span class="line">                        .replace(<span class="string">&quot;%serverStartedTime%&quot;</span>, SERVER_STARTED_TIME)</span><br><span class="line">                        .replace(<span class="string">&quot;%lastUpdateTime%&quot;</span>, Long.toString(Instant.now().getEpochSecond()));</span><br></pre></td></tr></table></figure>
+
+<p>其中第 255 行為：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Integer.toString(FileUtils.listFiles(<span class="keyword">new</span> <span class="title class_">File</span>((SERVER.getSaveProperties().getLevelName() + <span class="string">&quot;/stats/&quot;</span>)), <span class="literal">null</span>, <span class="literal">false</span>).size()))</span><br></pre></td></tr></table></figure>
+
+<p><code>SERVER</code> 是 <code>MinecraftServer</code> 類別的實體，所以可以斷言 <code>getSaveProperties()</code> 以及其底下的 <code>getLevelName()</code> 都是原生 Minecraft 的 API，應該不是 Mod 作者的鍋。</p>
+<p>後來直接往 NBT 資訊有存檔名稱的方向猜，打開 level.dat，果然還真的猜對了…</p>
+<p><img src="/post_image/2022/minecraft-world-change-name-level.dat/image-01.png"></p>
+<p>停機改掉之後再開啟，就沒再跳錯誤了。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/" class="post-title-link" itemprop="url">Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-28 16:28:00" itemprop="dateCreated datePublished" datetime="2022-07-28T16:28:00+08:00">2022-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Minecraft/" itemprop="url" rel="index"><span itemprop="name">Minecraft</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Fabric API 新版 Lifecycle 的幾個比較重要的生命週期（依照 <code>println()</code> （Kotlin) 印出結果來記錄）</p>
+<ul>
+<li><code>ServerLifecycleEvents.SERVER_STARTING</code>:<ul>
+<li>發生在 “Starting minecraft server version xxx” 之前，在 Fabric Loader 載入之後</li>
+<li>官方在相關 class 檔案內的註解為在 <code>PlayerManager</code> 載入之前 (<code>PlayerManager</code> 用來載入 OP、黑白名單等玩家相關名單)</li>
+<li>猜測適用於自訂方塊載入、可能對存檔內容初始化有影響的內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STARTED</code>:<ul>
+<li>發生在 “Done (x.xxxs)! For help, type “help””之後</li>
+<li>官方表示此時存檔已經載入完畢</li>
+<li>猜測適用於管理玩家、存檔後續設定、網路相關服務的啟動等內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STOPPING</code>:<ul>
+<li>在觸發 <code>/stop</code> 指令後的瞬間發生</li>
+<li>官方表示此時網路連線並未中斷，存檔、玩家資料等仍可以進行操作</li>
+<li>猜測適用於停止網路相關服務、針對伺服器停止時玩家的行為等內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STOPPED</code>:<ul>
+<li>發生於存檔已經儲存完畢之時</li>
+<li>官方表示此時存檔、玩家資料等已經無法再存取</li>
+<li>猜測適用於非常底層的卸載動作</li>
+</ul>
+</li>
+<li><code>(不在任何生命週期內)</code><ul>
+<li>發生於 datafixer 載入後的瞬間</li>
+<li>目前我還不知道這週期可以做什麼</li>
+</ul>
+</li>
+</ul>
+<p><code>onInitialize()</code> 的程式碼：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onInitialize</span><span class="params">()</span></span> &#123;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STARTING.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server starting&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STARTED.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server started&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STOPPING.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server stopping&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STOPPED.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server stopped&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        println(<span class="string">&quot;Hello world!&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出結果:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">[14:00:14] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.19 with Fabric Loader 0.14.8</span><br><span class="line">[14:00:14] [main/INFO] (FabricLoader) Loading 37 mods:</span><br><span class="line">    - dimmanager 0.1.0</span><br><span class="line">    - fabric 0.58.0+1.19</span><br><span class="line">    - fabric-api-base 0.4.9+e62f51a3a9</span><br><span class="line">    - fabric-api-lookup-api-v1 1.6.7+9ff28f40a9</span><br><span class="line">    - fabric-biome-api-v1 9.0.14+b2a4a624a9</span><br><span class="line">    - fabric-command-api-v2 2.1.2+0d55f585a9</span><br><span class="line">    - fabric-content-registries-v0 3.2.1+07df213ea9</span><br><span class="line">    - fabric-convention-tags-v1 1.0.8+37622d24a9</span><br><span class="line">    - fabric-crash-report-info-v1 0.2.3+bd0a0d4aa9</span><br><span class="line">    - fabric-data-generation-api-v1 5.1.2+a680b9b4a9</span><br><span class="line">    - fabric-dimensions-v1 2.1.28+a6d2f785a9</span><br><span class="line">    - fabric-entity-events-v1 1.4.16+9ff28f40a9</span><br><span class="line">    - fabric-events-interaction-v0 0.4.26+9ff28f40a9</span><br><span class="line">    - fabric-game-rule-api-v1 1.0.19+18990361a9</span><br><span class="line">    - fabric-gametest-api-v1 1.0.33+e62f51a3a9</span><br><span class="line">    - fabric-item-api-v1 1.5.5+35a03c43a9</span><br><span class="line">    - fabric-item-groups-v0 0.3.26+9ff28f40a9</span><br><span class="line">    - fabric-language-kotlin 1.8.2+kotlin.1.7.10</span><br><span class="line">    - fabric-lifecycle-events-v1 2.1.0+33fbc738a9</span><br><span class="line">    - fabric-loot-api-v2 1.1.1+03a4e568a9</span><br><span class="line">    - fabric-message-api-v1 1.0.1+513f4a59a9</span><br><span class="line">    - fabric-mining-level-api-v1 2.1.11+33fbc738a9</span><br><span class="line">    - fabric-networking-api-v1 1.1.0+442de8b8a9</span><br><span class="line">    - fabric-object-builder-api-v1 4.0.8+9ff28f40a9</span><br><span class="line">    - fabric-particles-v1 1.0.8+dc39553aa9</span><br><span class="line">    - fabric-registry-sync-v0 0.9.18+23c4cfefa9</span><br><span class="line">    - fabric-rendering-data-attachment-v1 0.3.12+9ff28f40a9</span><br><span class="line">    - fabric-rendering-fluids-v1 3.0.5+9ff28f40a9</span><br><span class="line">    - fabric-resource-conditions-api-v1 2.0.9+e62f51a3a9</span><br><span class="line">    - fabric-resource-loader-v0 0.5.6+5f1a85e0a9</span><br><span class="line">    - fabric-screen-handler-api-v1 1.2.7+9ff28f40a9</span><br><span class="line">    - fabric-transfer-api-v1 2.0.9+e62f51a3a9</span><br><span class="line">    - fabric-transitive-access-wideners-v1 1.1.1+9e7660c6a9</span><br><span class="line">    - fabricloader 0.14.8</span><br><span class="line">    - fantasy 0.4.5+1.19</span><br><span class="line">    - java 17</span><br><span class="line">    - minecraft 1.19</span><br><span class="line">[14:00:14] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/home/nesquate/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.11.4+mixin.0.8.5/c1dc27696aa4006e492c2485c9ccbcb26045a971/sponge-mixin-0.11.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17</span><br><span class="line">[14:00:16] [main/WARN] (FileUtil) Configuration conflict: there is more than one oshi.properties file on the classpath</span><br><span class="line">[14:00:16] [main/WARN] (FileUtil) Configuration conflict: there is more than one oshi.architecture.properties file on the classpath</span><br><span class="line">[14:00:19] [main/INFO] (Minecraft) Building unoptimized datafixer</span><br><span class="line">[14:00:22] [main/INFO] (Minecraft) [STDOUT]: Hello world!</span><br><span class="line">[14:00:22] [main/INFO] (Minecraft) Environment: authHost=&#x27;https://authserver.mojang.com&#x27;, accountsHost=&#x27;https://api.mojang.com&#x27;, sessionHost=&#x27;https://sessionserver.mojang.com&#x27;, servicesHost=&#x27;https://api.minecraftservices.com&#x27;, name=&#x27;PROD&#x27;</span><br><span class="line">[14:00:24] [main/INFO] (Minecraft) Loaded 7 recipes</span><br><span class="line">[14:00:25] [main/INFO] (Minecraft) Loaded 1179 advancements</span><br><span class="line">[14:00:26] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 63 new biomes in 3.226 ms</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server starting</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.19</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Loading properties</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Generating keypair</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Using epoll channel type</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Preparing level &quot;world&quot;</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 31%</span><br><span class="line">[14:00:31] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 93%</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) Time elapsed: 4557 ms</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) Done (4.925s)! For help, type &quot;help&quot;</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server started</span><br><span class="line">stop</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Stopping the server</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server stopping</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Stopping server</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Saving players</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Saving worlds</span><br><span class="line">[14:08:04] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:overworld</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:the_end</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:the_nether</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server stopped</span><br></pre></td></tr></table></figure>
+
+<p>了解這些生命週期可以讓我順利取得 Server 的實體，以便進行後續的 Coding。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="下一頁" aria-label="下一頁" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

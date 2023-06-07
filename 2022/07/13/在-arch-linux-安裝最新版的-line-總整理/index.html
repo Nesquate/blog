@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="關於 Arch Linux 怎麼灌 LINE 的步驟，我已經在 PTT 上 (https:&#x2F;&#x2F;www.ptt.cc&#x2F;bbs&#x2F;Linux&#x2F;M.1657093067.A.B49.html) 有初步分享，經由鄉民們的補充後，誕生出這篇文章。 整理出這篇就是希望以後自己在安裝 Arch Linux 的時候有點脈落，而不是缺啥補啥，搞到時間都浪費掉。 安裝 Wine 以及套件庫首先必須打開 multilib">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Arch Linux 安裝最新版的 LINE 總整理">
+<meta property="og:url" content="https://blog.nesquate.tw/2022/07/13/%E5%9C%A8-arch-linux-%E5%AE%89%E8%A3%9D%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84-line-%E7%B8%BD%E6%95%B4%E7%90%86/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="關於 Arch Linux 怎麼灌 LINE 的步驟，我已經在 PTT 上 (https:&#x2F;&#x2F;www.ptt.cc&#x2F;bbs&#x2F;Linux&#x2F;M.1657093067.A.B49.html) 有初步分享，經由鄉民們的補充後，誕生出這篇文章。 整理出這篇就是希望以後自己在安裝 Arch Linux 的時候有點脈落，而不是缺啥補啥，搞到時間都浪費掉。 安裝 Wine 以及套件庫首先必須打開 multilib">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/2022/line-latest-install-in-arch/wine-line-01.jpg">
+<meta property="article:published_time" content="2022-07-13T08:07:00.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.487Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Arch Linux">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LINE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.nesquate.tw/post_image/2022/line-latest-install-in-arch/wine-line-01.jpg">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2022/07/13/%E5%9C%A8-arch-linux-%E5%AE%89%E8%A3%9D%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84-line-%E7%B8%BD%E6%95%B4%E7%90%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2022/07/13/%E5%9C%A8-arch-linux-%E5%AE%89%E8%A3%9D%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84-line-%E7%B8%BD%E6%95%B4%E7%90%86/","path":"2022/07/13/在-arch-linux-安裝最新版的-line-總整理/","title":"在 Arch Linux 安裝最新版的 LINE 總整理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 Arch Linux 安裝最新版的 LINE 總整理 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-Wine-%E4%BB%A5%E5%8F%8A%E5%A5%97%E4%BB%B6%E5%BA%AB"><span class="nav-number">1.</span> <span class="nav-text">安裝 Wine 以及套件庫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-LINE-%E7%9A%84%E5%9F%B7%E8%A1%8C%E7%92%B0%E5%A2%83"><span class="nav-number">2.</span> <span class="nav-text">設定 LINE 的執行環境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-Visual-C-2012-Runtime"><span class="nav-number">3.</span> <span class="nav-text">安裝 Visual C++ 2012 Runtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D-LINE"><span class="nav-number">4.</span> <span class="nav-text">安裝 LINE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">故障排除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%87%E6%8F%9B%E5%88%B0%E5%85%B6%E4%BB%96%E8%A6%96%E7%AA%97%E6%99%82%EF%BC%8CLINE-%E8%A6%96%E7%AA%97%E7%9A%84%E5%A4%96%E6%A1%86%E9%82%84%E5%9C%A8%EF%BC%9F"><span class="nav-number">5.1.</span> <span class="nav-text">切換到其他視窗時，LINE 視窗的外框還在？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E9%AB%94%E9%A1%AF%E7%A4%BA%E6%80%AA%E6%80%AA%E7%9A%84"><span class="nav-number">5.2.</span> <span class="nav-text">字體顯示怪怪的</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/07/13/%E5%9C%A8-arch-linux-%E5%AE%89%E8%A3%9D%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84-line-%E7%B8%BD%E6%95%B4%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 Arch Linux 安裝最新版的 LINE 總整理 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Arch Linux 安裝最新版的 LINE 總整理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-13 16:07:00" itemprop="dateCreated datePublished" datetime="2022-07-13T16:07:00+08:00">2022-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>關於 Arch Linux 怎麼灌 LINE 的步驟，我已經在 PTT 上 (<a target="_blank" rel="noopener" href="https://www.ptt.cc/bbs/Linux/M.1657093067.A.B49.html">https://www.ptt.cc/bbs/Linux/M.1657093067.A.B49.html</a>) 有初步分享，經由鄉民們的補充後，誕生出這篇文章。</p>
+<p>整理出這篇就是希望以後自己在安裝 Arch Linux 的時候有點脈落，而不是缺啥補啥，搞到時間都浪費掉。</p>
+<h3 id="安裝-Wine-以及套件庫"><a href="#安裝-Wine-以及套件庫" class="headerlink" title="安裝 Wine 以及套件庫"></a>安裝 Wine 以及套件庫</h3><p>首先必須打開 <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/official_repositories#multilib">multilib</a> 軟體庫，以 root 權限用文字編輯器開啟 <code>/etc/pacman.conf</code> 之後，取消註解下列內容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">multilib</span>]</span><br><span class="line"><span class="string">Include</span> <span class="string">=</span> <span class="string">/etc/pacman.d/mirrorlist</span></span><br></pre></td></tr></table></figure>
+
+<p>存檔之後，下 <code>sudo pacman -Syu</code> 重新同步軟體庫資料庫，之後安裝 Wine 與 Winetricks：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S wine winetricks</span><br></pre></td></tr></table></figure>
+
+<p>據 PTT 鄉民的回報，還需要加裝以下兩個 Library 才可以讓 LINE 的媒體功能正常運作（看圖以及影片聲音）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S lib32-openal lib32-libpulse</span><br></pre></td></tr></table></figure>
+
+<h3 id="設定-LINE-的執行環境"><a href="#設定-LINE-的執行環境" class="headerlink" title="設定 LINE 的執行環境"></a>設定 LINE 的執行環境</h3><p>一樣是據 PTT 鄉民回報，最新版的 LINE 需要 64 位元的環境 + Visual C++ 2012 Runtime 才可以運行。</p>
+<p>首先建立一個 LINE 專屬的 Wine 執行環境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WINEPREFIX=~/.wine-line winecfg</span><br></pre></td></tr></table></figure>
+
+<p>並順便進入設定。過程中若有提示要安裝 Wine Mono 的話，請不要安裝，因為用不到 .NET 框架執行環境。</p>
+<p>進入設定之後，目前只要改 Windows 執行版本為 Windows 10 就好。</p>
+<p><img src="/post_image/2022/line-latest-install-in-arch/wine-line-01.jpg"></p>
+<h3 id="安裝-Visual-C-2012-Runtime"><a href="#安裝-Visual-C-2012-Runtime" class="headerlink" title="安裝 Visual C++ 2012 Runtime"></a>安裝 Visual C++ 2012 Runtime</h3><p>這時可以請 Winetricks 代勞下載：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WINEPREFIX=~/.wine-line winetricks vctun2012</span><br></pre></td></tr></table></figure>
+
+<p>如果不給下載，進去 Winetricks -&gt; 選取預設的 Wine 容器 -&gt; 安裝 Windows DLL 或套件，句選 vctun2012 也可以。</p>
+<p>預設它會把 32 位元和 64 位元的 Runtime 下載下來，如果有彈出安裝視窗就把它們裝好吧。</p>
+<h3 id="安裝-LINE"><a href="#安裝-LINE" class="headerlink" title="安裝 LINE"></a>安裝 LINE</h3><p>搞定好 Runtime 之後，接下來可以直接下載<a target="_blank" rel="noopener" href="https://desktop.line-scdn.net/win/new/LineInst.exe">最新版的 LINE</a>然後下以下指令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WINEPREFIX=~/.wine-line wine /path/to/LineInst.exe</span><br></pre></td></tr></table></figure>
+
+<p><code>/path/to/LineInst.exe</code> 改成 LineInst.exe 實際放置的路徑就好。</p>
+<p>安裝結束之後，基本上你的 LINE 已經可以正常運作了。</p>
+<h3 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h3><h4 id="切換到其他視窗時，LINE-視窗的外框還在？"><a href="#切換到其他視窗時，LINE-視窗的外框還在？" class="headerlink" title="切換到其他視窗時，LINE 視窗的外框還在？"></a>切換到其他視窗時，LINE 視窗的外框還在？</h4><p>Wine 的問題，左岸網友在 WeChat 上也有遇到，後來找到視窗外框的 ID 就解決了，</p>
+<p>可以嘗試使用此方式解決看看。</p>
+<p>可參考：<br><a target="_blank" rel="noopener" href="https://www.ptt.cc/bbs/Linux/M.1643429963.A.510.html">https://www.ptt.cc/bbs/Linux/M.1643429963.A.510.html</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/106926984">https://zhuanlan.zhihu.com/p/106926984</a></p>
+<h4 id="字體顯示怪怪的"><a href="#字體顯示怪怪的" class="headerlink" title="字體顯示怪怪的"></a>字體顯示怪怪的</h4><p>安裝 <a target="_blank" rel="noopener" href="https://aur.archlinux.org/packages/ttf-win10">ttf-win10</a> 可能可以解決這個問題，不過你可能要先去安裝 AUR Helper，以及安裝時會下載 Windows 10 的 ISO 檔案，請準備好 10GB 的可用磁碟空間。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Arch-Linux/" rel="tag"># Arch Linux</a>
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/LINE/" rel="tag"># LINE</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/15/%E8%A8%AD%E5%AE%9A-cloudflare-%E5%B0%8E%E8%87%B4%E7%80%8F%E8%A6%BD%E5%99%A8%E5%87%BA%E7%8F%BE%E3%80%8Cerr-too-many-redirects%E3%80%8D%E7%9A%84%E9%8C%AF%E8%AA%A4/" rel="prev" title="設定 Cloudflare 導致瀏覽器出現「ERR_TOO_MANY_REDIRECTS」的錯誤">
+                  <i class="fa fa-chevron-left"></i> 設定 Cloudflare 導致瀏覽器出現「ERR_TOO_MANY_REDIRECTS」的錯誤
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/" rel="next" title="Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期">
+                  Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

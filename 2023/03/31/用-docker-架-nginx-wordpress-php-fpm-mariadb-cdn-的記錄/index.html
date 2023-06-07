@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="釐清需求 需要有 HTTPS 不要再 Reverse Proxy 了 用 MariaDB 需要活用 CDN 做圖片快取  HTTPS 已經是現在網站的標配了，而用 MariaDB 只是單純討厭 Oracle…。 至於 Reverse Proxy 的部分，以前在用 VPS 架設 WordPress 的時候，因為 PHP-FPM 與 Nginx 設定上的卡關，所以最後都用 Reverse Proxy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄">
+<meta property="og:url" content="https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="釐清需求 需要有 HTTPS 不要再 Reverse Proxy 了 用 MariaDB 需要活用 CDN 做圖片快取  HTTPS 已經是現在網站的標配了，而用 MariaDB 只是單純討厭 Oracle…。 至於 Reverse Proxy 的部分，以前在用 VPS 架設 WordPress 的時候，因為 PHP-FPM 與 Nginx 設定上的卡關，所以最後都用 Reverse Proxy">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2023-03-31-152104.png">
+<meta property="og:image" content="https://blog.nesquate.tw/post_image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2023-03-31-153050.png">
+<meta property="article:published_time" content="2023-03-31T07:41:19.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.487Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="MariaDB">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="WordPress">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.nesquate.tw/post_image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2023-03-31-152104.png">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/","path":"2023/03/31/用-docker-架-nginx-wordpress-php-fpm-mariadb-cdn-的記錄/","title":"用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%90%E6%B8%85%E9%9C%80%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">釐清需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-yml-%E7%9A%84%E6%92%B0%E5%AF%AB"><span class="nav-number">2.</span> <span class="nav-text">docker-compose.yml 的撰寫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx-%E7%AB%AF%E7%9A%84%E8%A8%AD%E5%AE%9A-%E5%85%88%E6%8A%8A-WordPress-%E6%90%9E%E5%AE%9A"><span class="nav-number">3.</span> <span class="nav-text">Nginx 端的設定 - 先把 WordPress 搞定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PHP-%E8%88%87%E9%99%84%E4%BB%B6%E5%A4%A7%E5%B0%8F"><span class="nav-number">4.</span> <span class="nav-text">PHP 與附件大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CDN-%E8%88%87-wp-content-%E7%9A%84%E8%BD%89%E5%9D%80"><span class="nav-number">5.</span> <span class="nav-text">CDN 與 wp-content 的轉址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%B5%90"><span class="nav-number">6.</span> <span class="nav-text">小結</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2023-03-31 15:41:19" itemprop="dateCreated datePublished" datetime="2023-03-31T15:41:19+08:00">2023-03-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9E%B6%E7%AB%99%E7%9B%B8%E9%97%9C/" itemprop="url" rel="index"><span itemprop="name">架站相關</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="釐清需求"><a href="#釐清需求" class="headerlink" title="釐清需求"></a>釐清需求</h3><ul>
+<li>需要有 HTTPS</li>
+<li><strong>不要再 Reverse Proxy 了</strong></li>
+<li>用 MariaDB</li>
+<li><strong>需要活用 CDN 做圖片快取</strong></li>
+</ul>
+<p>HTTPS 已經是現在網站的標配了，而用 MariaDB 只是單純討厭 Oracle…。</p>
+<p>至於 Reverse Proxy 的部分，以前在用 VPS 架設 WordPress 的時候，因為 PHP-FPM 與 Nginx 設定上的卡關，所以最後都用 Reverse Proxy 含糊過去。雖然架站速度也確實是快，但是因為容器內也有一個 HTTP Server，頗吃系統資源。</p>
+<p>最後一點是 CDN，由於之後想要藉由 WordPress 內的媒體庫功能管理所有媒體，所以希望在連上 &#x2F;wp-content 底下相關內容時可以將上傳的內容全部給 CDN 做快取。</p>
+<span id="more"></span>
+<h3 id="docker-compose-yml-的撰寫"><a href="#docker-compose-yml-的撰寫" class="headerlink" title="docker-compose.yml 的撰寫"></a>docker-compose.yml 的撰寫</h3><p>這邊直接從 docker-compose.yml 開始切入，至於怎麼安裝 Docker 則不在本文討論範圍。</p>
+<p>因為需要 HTTPS，所以這邊採用不用花錢的 Let’s Encrypt 方案，Docker 容器部署則是選擇整合了 Certbot 的 <a target="_blank" rel="noopener" href="https://github.com/JonasAlfredsson/docker-nginx-certbot">docker-nginx-certbot</a> 這個 Image，Environment 的部分也只要填寫 CERTBOT_EMAIL 就好了。</p>
+<p>WordPress 的 Image也是使用<a target="_blank" rel="noopener" href="https://hub.docker.com/_/wordpress">官方版本</a>就好，不過這邊我有多設WORDPRESS_TABLE_PREFIX 原因是我沒有找到可以在同個 MariaDB (或 MySQL) 容器上輕易建立兩個以上的 Database，考量到之後還有可能要再用同個資料庫安裝其他服務，就先加上去。</p>
+<p>WordPress 官方 Image 並沒有處理 SMTP，這我之後再找時間處理看看…。</p>
+<p>MariaDB 的部分目前就先用官方 Image 就好，不過這邊沒啥要注意的事項，就依照自己需求設定就好。</p>
+<p>所以整個 docker-compose.yml 寫起來會變成這樣：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.9&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">jonasal/nginx-certbot:4.2.0</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> </span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">CERTBOT_EMAIL:</span> </span><br><span class="line">    <span class="attr">networks:</span> </span><br><span class="line">      <span class="attr">default:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> </span><br><span class="line">  <span class="attr">wordpress:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">wordpress:6.1.1-php8.2-fpm-alpine</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">WORDPRESS_DB_HOST:</span> <span class="string">mariadb</span></span><br><span class="line">      <span class="attr">WORDPRESS_DB_USER:</span> </span><br><span class="line">      <span class="attr">WORDPRESS_DB_PASSWORD:</span> </span><br><span class="line">      <span class="attr">WORDPRESS_DB_NAME:</span> </span><br><span class="line">      <span class="attr">WORDPRESS_TABLE_PREFIX:</span> </span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> </span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="attr">default:</span></span><br><span class="line">        <span class="attr">aliases:</span></span><br><span class="line">          <span class="bullet">-</span> </span><br><span class="line">  <span class="attr">mariadb:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb:10.11.2-jammy</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> </span><br><span class="line">      <span class="attr">MYSQL_USER:</span> </span><br><span class="line">      <span class="attr">MYSQL_PASSWORD:</span> </span><br><span class="line">      <span class="attr">MYSQL_RANDOM_ROOT_PASSWORD:</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> </span><br></pre></td></tr></table></figure>
+
+<p>我把敏感資訊和 Volume 相關資訊全部拔掉了，有需要者自己翻文件填入。</p>
+<p>實際安裝後我發現 cURL 會有 Error 28 ，以及 PHP 效能奇差的問題，後來找到 <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/61490829/error-curl-error-28-resolving-timed-out-after-10000-milliseconds-http-request">stackoverflow 上</a>有人解釋說 Nginx 容器的 network 要加上 alias，於是我 WordPress 和 Nginx 容器都加上去後就正常多了。</p>
+<h3 id="Nginx-端的設定-先把-WordPress-搞定"><a href="#Nginx-端的設定-先把-WordPress-搞定" class="headerlink" title="Nginx 端的設定 - 先把 WordPress 搞定"></a>Nginx 端的設定 - 先把 WordPress 搞定</h3><p>至少 WordPress 要先能夠瀏覽才可以做其他設定吧？另外先設定好 Nginx 也是為了確保 <a target="_blank" rel="noopener" href="https://github.com/JonasAlfredsson/docker-nginx-certbot">docker-nginx-certbot</a> 這個 Image 是否能夠正常運作。</p>
+<p>容器要能夠運作需要指定 TLS 憑證的儲存位置才行，所以像是 ssl_certificate、ssl_certificate_key、ssl_trusted_certificate 和 ssl_dhparam 這些參數一定要設定，詳情可以參考 <a target="_blank" rel="noopener" href="https://github.com/JonasAlfredsson/docker-nginx-certbot/blob/master/examples/example_server.conf">GitHub 上的 Example</a>。</p>
+<p>設定 FPM Proxy 的時候要注意 fastcgi_param SCRIPT_FILENAME，網路上的各種教學所設定的值是 $document_root$fastcgi_script_name，如果 docker-nginx-certbot 的 root 參數與 WordPress 的設定 (&#x2F;var&#x2F;www&#x2F;html) 不同的話，請將 $document_root 改成 &#x2F;var&#x2F;www&#x2F;html 以避免連不上的問題。</p>
+<p>整個 site.conf 設定結果大概像是這樣：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server</span> <span class="string">&#123;</span></span><br><span class="line"><span class="comment"># Listen to port 443 on both IPv4 and IPv6.</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">443 ssl;</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">[::]:443 ssl;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Domain names this server should respond to.</span></span><br><span class="line"><span class="attr">server_name</span> <span class="string">&lt;your_domain_name&gt;;</span></span><br><span class="line"><span class="attr">root</span> <span class="string">&lt;dir&gt;;</span></span><br><span class="line"><span class="attr">index</span> <span class="string">index.php;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Load the certificate files.</span></span><br><span class="line"><span class="attr">ssl_certificate</span>         <span class="string">/etc/letsencrypt/live/.../fullchain.pem;</span></span><br><span class="line"><span class="attr">ssl_certificate_key</span>     <span class="string">/etc/letsencrypt/live/.../privkey.pem;</span></span><br><span class="line"><span class="attr">ssl_trusted_certificate</span> <span class="string">/etc/letsencrypt/live/.../chain.pem;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Load the Diffie-Hellman parameter.</span></span><br><span class="line"><span class="attr">ssl_dhparam</span> <span class="string">/etc/letsencrypt/dhparams/dhparam.pem;</span></span><br><span class="line">   </span><br><span class="line"><span class="attr">location</span> <span class="string">/ &#123;</span></span><br><span class="line"><span class="attr">try_files</span> <span class="string">$uri $uri/ /index.php?$is_args$args;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">location</span> <span class="string">~ \.php$ &#123;</span></span><br><span class="line"><span class="attr">try_files</span> <span class="string">$uri =404;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">fastcgi_split_path_info</span> <span class="string">^(.+\.php)(/.+)$;</span></span><br><span class="line"><span class="attr">fastcgi_pass</span> <span class="string">&lt;wordpress_contain_name&gt;:9000;</span></span><br><span class="line"><span class="attr">fastcgi_index</span> <span class="string">index.php;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">include</span> <span class="string">fastcgi_params;</span></span><br><span class="line"><span class="attr">fastcgi_param</span> <span class="string">SCRIPT_FILENAME /var/www/html$fastcgi_script_name;</span></span><br><span class="line"><span class="attr">fastcgi_param</span> <span class="string">PATH_INFO $fastcgi_path_info;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>記得檢查 docker-compose.yml 確保檔案有被掛載到 &#x2F;etc&#x2F;nginx&#x2F;user_conf.d 裡面。還有 &#x2F;etc&#x2F;letsencrypt 這容器目錄也要掛載到 Volume 或是 Bind mount 否則每次開啟容器都會重新產生 TLS 憑證 (然後就不給你產了，印象中 Let’s Encrypt 同個網域 7 天後才能重新產生憑證)。</p>
+<h3 id="PHP-與附件大小"><a href="#PHP-與附件大小" class="headerlink" title="PHP 與附件大小"></a>PHP 與附件大小</h3><p>WordPress 官方 Image 預設只給 2 MB 的上傳，雖然說可以提醒站長一定要將圖片壓縮再上傳（不然就算有 CDN 加持還是很危險），不過我還是把它設大一點比較省事。</p>
+<p>建立檔名為 upload.ini (或其他檔名，副檔名建議為 .ini)，然後加入以下內容：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">upload_max_filesize</span> = <span class="number">32</span>M</span><br><span class="line"><span class="attr">post_max_size</span> = <span class="number">32</span>M</span><br></pre></td></tr></table></figure>
+
+<p>32M 應該在各種場合上已經夠用，畢竟我也沒有要上傳影片的意思。</p>
+<p>然後把 upload.ini 掛載到 WordPress 容器的 &#x2F;usr&#x2F;local&#x2F;etc&#x2F;php&#x2F;conf.d&#x2F; 底下，這樣重啟容器就會套用了。</p>
+<p>但這樣還不夠，Nginx 那邊也要設定，所以在 site.conf  的 server 區段內下新增：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">client_max_body_size</span> <span class="string">32M;</span></span><br></pre></td></tr></table></figure>
+
+<p>這行就好，然後重啟 Nginx 容器。</p>
+<h3 id="CDN-與-wp-content-的轉址"><a href="#CDN-與-wp-content-的轉址" class="headerlink" title="CDN 與 wp-content 的轉址"></a>CDN 與 wp-content 的轉址</h3><p>這部分是參考 <a target="_blank" rel="noopener" href="https://crlab.io/339">CR 研究室的文章</a> 來設定，所以有很多相似之處。</p>
+<p>基本上就是對原本的 wp-content&#x2F;uploads 做 HTTP 301，然後再建一個同 root 的但是不同 Domain 的 Virtual Host，並且把 .php 用 HTTP 403 擋光光。</p>
+<p>這邊 CDN 使用 Cloudflare，所以除了記得要好好設定 <a href="https://blog.nesquate.tw/2022/05/15/%e8%a8%ad%e5%ae%9a-cloudflare-%e5%b0%8e%e8%87%b4%e7%80%8f%e8%a6%bd%e5%99%a8%e5%87%ba%e7%8f%be%e3%80%8cerr_too_many_redirects%e3%80%8d%e7%9a%84%e9%8c%af%e8%aa%a4/">SSL 驗證模式</a>之外，還要設定 Page Rule：</p>
+<p><img src="/post_image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2023-03-31-152104.png" alt="Cloudflare-Image-Cache-PageRule"></p>
+<p>然後設定 Nginx，舉本站為例子：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server</span> <span class="string">&#123; # WordPress</span></span><br><span class="line"><span class="attr">client_max_body_size</span> <span class="string">32M;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Listen to port 443 on both IPv4 and IPv6.</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">443 ssl;</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">[::]:443 ssl;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Domain names this server should respond to.</span></span><br><span class="line"><span class="attr">server_name</span> <span class="string">blog.nesquate.tw;</span></span><br><span class="line"><span class="attr">root</span> <span class="string">/websites/wordpress;</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">......</span></span><br><span class="line">    </span><br><span class="line"><span class="attr">location</span> <span class="string">~ /wp-content/uploads/(?&lt;media&gt;.+) &#123; # Redirect to CDN</span></span><br><span class="line">          <span class="attr">return</span> <span class="string">301 https://cdn-blog.nesquate.tw/wp-content/uploads/$media;</span></span><br><span class="line">  <span class="attr">&#125;</span></span><br><span class="line">     </span><br><span class="line">        <span class="attr">......</span></span><br><span class="line"></span><br><span class="line"><span class="attr">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server</span> <span class="string">&#123; # WordPress-CDN</span></span><br><span class="line"><span class="attr">client_max_body_size</span> <span class="string">32M;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Listen to port 443 on both IPv4 and IPv6.</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">443 ssl;</span></span><br><span class="line"><span class="attr">listen</span> <span class="string">[::]:443 ssl;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Domain names this server should respond to.</span></span><br><span class="line"><span class="attr">server_name</span> <span class="string">cdn-blog.nesquate.tw;</span></span><br><span class="line"><span class="attr">root</span> <span class="string">/websites/wordpress;</span></span><br><span class="line"></span><br><span class="line">        <span class="attr">......</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">location</span> <span class="string">~ [^/]\.php(/$) &#123; # No php excute</span></span><br><span class="line">          <span class="attr">return</span> <span class="string">403;</span></span><br><span class="line">  <span class="attr">&#125;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>個人建議 HTTP 301 的 location 區段要放在其他 location 區段的最上面，否則重新導向可能會無法正常運作。</p>
+<p>最後關於 CR 研究室那邊提到的 CDN Enabler，因為該外掛改動滿大的，這邊截個圖說明一下：</p>
+<p><img src="/post_image/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2023-03-31-153050.png" alt="CDN-Enabler-New"></p>
+<p>「CDN 包含項目」可以不用動，不過「CDN 排除項目」預設為空，這邊建議排除以下項目：</p>
+<ul>
+<li>所有 PHP 檔案 (.*php)</li>
+<li>wp-includes&#x2F; (我沒有要快取整個網站)</li>
+<li>wp-admin&#x2F; (理由同上)</li>
+<li>wp-content&#x2F;themes (有些佈景主題會設 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/HTTP/CORS">CORS</a> 的限制，基本上是<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-TW/docs/Web/Security/Same-origin_policy">同源政策</a>，這時候不排除掉瀏覽器 Console 會跑出很多錯誤，PageSpeed Test 也會跟你說)</li>
+<li>wp-content&#x2F;plugins (理由同上，有些外掛也會有這問題)</li>
+<li>wp-content&#x2F;cache (「快取你的快取」很不 OK)</li>
+</ul>
+<p>設定好之後，基本上你上傳到媒體庫的圖片都會被轉址到 CDN，且被 CDN 快取。</p>
+<h3 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h3><p>很久沒有摸 VPS 了，這次摸了一下並把架設 WordPress 當作練習。</p>
+<p>有些問題印象中過去並沒有碰到過，可能是因為 WordPress 官方 Image 的 Apache + Wordpress Image 包得好好的原因吧，這就不太清楚了。</p>
+<p>架設好網站只是開始，後面還有很多東西要調整，例如 Nginx 的瀏覽器快取設定等。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MariaDB/" rel="tag"># MariaDB</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+              <a href="/tags/VPS/" rel="tag"># VPS</a>
+              <a href="/tags/WordPress/" rel="tag"># WordPress</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/" rel="prev" title="併站告知">
+                  <i class="fa fa-chevron-left"></i> 併站告知
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/03/%E7%94%A8-dockerfile-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E7%9A%84-freshrss-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%EF%BC%88php-fpm%EF%BC%89/" rel="next" title="用 Dockerfile 建立最小的 FreshRSS 運行環境（PHP-FPM）">
+                  用 Dockerfile 建立最小的 FreshRSS 運行環境（PHP-FPM） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

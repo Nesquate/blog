@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>美代子隨筆</title>
+  <icon>https://blog.nesquate.tw/site_assets/me.png</icon>
+  
+  <link href="https://blog.nesquate.tw/atom.xml" rel="self"/>
+  
+  <link href="https://blog.nesquate.tw/"/>
+  <updated>2023-06-07T09:49:02.483Z</updated>
+  <id>https://blog.nesquate.tw/</id>
+  
+  <author>
+    <name>Nesquate</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iPad 鎖定螢幕後 Wi-Fi 會自動斷線的鬼故事</title>
+    <link href="https://blog.nesquate.tw/2023/04/19/ipad-%E9%8E%96%E5%AE%9A%E8%9E%A2%E5%B9%95%E5%BE%8C-wi-fi-%E6%9C%83%E8%87%AA%E5%8B%95%E6%96%B7%E7%B7%9A%E7%9A%84%E9%AC%BC%E6%95%85%E4%BA%8B/"/>
+    <id>https://blog.nesquate.tw/2023/04/19/ipad-%E9%8E%96%E5%AE%9A%E8%9E%A2%E5%B9%95%E5%BE%8C-wi-fi-%E6%9C%83%E8%87%AA%E5%8B%95%E6%96%B7%E7%B7%9A%E7%9A%84%E9%AC%BC%E6%95%85%E4%BA%8B/</id>
+    <published>2023-04-19T11:15:55.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;自從 3 月買了 iPad 之後，就一直發生很奇怪的事情－Wi-Fi 在鎖定螢幕之後自動斷線。 &lt;/p&gt;
+&lt;p&gt;起初以為是 iPadOS 本身的機制，我也以為這是 iPad</summary>
+        
+      
+    
+    
+    
+    <category term="系統維運" scheme="https://blog.nesquate.tw/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/"/>
+    
+    
+    <category term="iPad" scheme="https://blog.nesquate.tw/tags/iPad/"/>
+    
+    <category term="Wi-Fi" scheme="https://blog.nesquate.tw/tags/Wi-Fi/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用 Dockerfile 建立最小的 FreshRSS 運行環境（PHP-FPM）</title>
+    <link href="https://blog.nesquate.tw/2023/04/03/%E7%94%A8-dockerfile-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E7%9A%84-freshrss-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%EF%BC%88php-fpm%EF%BC%89/"/>
+    <id>https://blog.nesquate.tw/2023/04/03/%E7%94%A8-dockerfile-%E5%BB%BA%E7%AB%8B%E6%9C%80%E5%B0%8F%E7%9A%84-freshrss-%E9%81%8B%E8%A1%8C%E7%92%B0%E5%A2%83%EF%BC%88php-fpm%EF%BC%89/</id>
+    <published>2023-04-03T08:46:09.000Z</published>
+    <updated>2023-06-07T09:49:02.487Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/FreshRSS/FreshRSS&quot;&gt;FreshRSS&lt;/a&gt; 是自建 &lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="架站相關" scheme="https://blog.nesquate.tw/categories/%E6%9E%B6%E7%AB%99%E7%9B%B8%E9%97%9C/"/>
+    
+    
+    <category term="Docker" scheme="https://blog.nesquate.tw/tags/Docker/"/>
+    
+    <category term="docker-php-ext" scheme="https://blog.nesquate.tw/tags/docker-php-ext/"/>
+    
+    <category term="Dockerfile" scheme="https://blog.nesquate.tw/tags/Dockerfile/"/>
+    
+    <category term="PHP" scheme="https://blog.nesquate.tw/tags/PHP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用 Docker 架 Nginx + WordPress (PHP-FPM) + MariaDB + CDN 的記錄</title>
+    <link href="https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/"/>
+    <id>https://blog.nesquate.tw/2023/03/31/%E7%94%A8-docker-%E6%9E%B6-nginx-wordpress-php-fpm-mariadb-cdn-%E7%9A%84%E8%A8%98%E9%8C%84/</id>
+    <published>2023-03-31T07:41:19.000Z</published>
+    <updated>2023-06-07T09:49:02.487Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;釐清需求&quot;&gt;&lt;a href=&quot;#釐清需求&quot; class=&quot;headerlink&quot; title=&quot;釐清需求&quot;&gt;&lt;/a&gt;釐清需求&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;需要有 HTTPS&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不要再 Reverse Proxy 了&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;用 MariaDB&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;需要活用 CDN 做圖片快取&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;HTTPS 已經是現在網站的標配了，而用 MariaDB 只是單純討厭 Oracle…。&lt;/p&gt;
+&lt;p&gt;至於 Reverse Proxy 的部分，以前在用 VPS 架設 WordPress 的時候，因為 PHP-FPM 與 Nginx 設定上的卡關，所以最後都用 Reverse Proxy 含糊過去。雖然架站速度也確實是快，但是因為容器內也有一個 HTTP Server，頗吃系統資源。&lt;/p&gt;
+&lt;p&gt;最後一點是 CDN，由於之後想要藉由 WordPress 內的媒體庫功能管理所有媒體，所以希望在連上 &amp;#x2F;wp-content 底下相關內容時可以將上傳的內容全部給 CDN 做快取。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="架站相關" scheme="https://blog.nesquate.tw/categories/%E6%9E%B6%E7%AB%99%E7%9B%B8%E9%97%9C/"/>
+    
+    
+    <category term="MariaDB" scheme="https://blog.nesquate.tw/tags/MariaDB/"/>
+    
+    <category term="Nginx" scheme="https://blog.nesquate.tw/tags/Nginx/"/>
+    
+    <category term="VPS" scheme="https://blog.nesquate.tw/tags/VPS/"/>
+    
+    <category term="WordPress" scheme="https://blog.nesquate.tw/tags/WordPress/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>併站告知</title>
+    <link href="https://blog.nesquate.tw/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/"/>
+    <id>https://blog.nesquate.tw/2023/03/30/%E4%BD%B5%E7%AB%99%E5%91%8A%E7%9F%A5/</id>
+    <published>2023-03-30T10:37:38.000Z</published>
+    <updated>2023-06-07T09:49:02.487Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;目前這個網站已經結合了以下網站的所有內容或部分內容：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;我明白了，也許&lt;/strong&gt; - 原名為「角落的視角」，創建於 2017&amp;#x2F;10&amp;#x2F;10 (WordPress -&amp;gt; WordPress.com)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;閒著來寫&lt;/strong&gt; - 創建於 2018&amp;#x2F;11&amp;#x2F;02 (Blogger.com)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nesquate&lt;/strong&gt; - 創建於 2019&amp;#x2F;09&amp;#x2F;20 (WordPress -&amp;gt; Hexo -&amp;gt; Hugo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;美代子的部落格&lt;/strong&gt; - 創建於 2021&amp;#x2F;03&amp;#x2F;10 (Hexo)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;美代子隨筆&lt;/strong&gt; - 創建於 2022&amp;#x2F;05&amp;#x2F;04 (WordPress -&amp;gt; Hexo -&amp;gt; 11ty -&amp;gt; Hugo -&amp;gt; WordPress)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;這可能還不是最終列表，若有新網站的被併入的話，此列表會更新。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="個人想法" scheme="https://blog.nesquate.tw/categories/%E5%80%8B%E4%BA%BA%E6%83%B3%E6%B3%95/"/>
+    
+    
+    <category term="Blog" scheme="https://blog.nesquate.tw/tags/Blog/"/>
+    
+    <category term="搬家" scheme="https://blog.nesquate.tw/tags/%E6%90%AC%E5%AE%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Kagi 3/15 號後要執行的付費方案變更</title>
+    <link href="https://blog.nesquate.tw/2023/03/09/kagi-3-15-%E8%99%9F%E5%BE%8C%E8%A6%81%E5%9F%B7%E8%A1%8C%E7%9A%84%E4%BB%98%E8%B2%BB%E6%96%B9%E6%A1%88%E8%AE%8A%E6%9B%B4/"/>
+    <id>https://blog.nesquate.tw/2023/03/09/kagi-3-15-%E8%99%9F%E5%BE%8C%E8%A6%81%E5%9F%B7%E8%A1%8C%E7%9A%84%E4%BB%98%E8%B2%BB%E6%96%B9%E6%A1%88%E8%AE%8A%E6%9B%B4/</id>
+    <published>2023-03-09T08:51:00.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;才剛訂 Kagi 10 鎂無限搜尋方案不到一個月，官方說要改付費方案了…時間真不巧 XD（3&amp;#x2F;15 起更動）&lt;/p&gt;
+&lt;p&gt;免費搜尋額度:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Free</summary>
+        
+      
+    
+    
+    
+    <category term="網路服務" scheme="https://blog.nesquate.tw/categories/%E7%B6%B2%E8%B7%AF%E6%9C%8D%E5%8B%99/"/>
+    
+    
+    <category term="Kagi" scheme="https://blog.nesquate.tw/tags/Kagi/"/>
+    
+    <category term="搜尋引擎" scheme="https://blog.nesquate.tw/tags/%E6%90%9C%E5%B0%8B%E5%BC%95%E6%93%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git 遠端儲存庫強制蓋台</title>
+    <link href="https://blog.nesquate.tw/2022/10/12/git-%E9%81%A0%E7%AB%AF%E5%84%B2%E5%AD%98%E5%BA%AB%E5%BC%B7%E5%88%B6%E8%93%8B%E5%8F%B0/"/>
+    <id>https://blog.nesquate.tw/2022/10/12/git-%E9%81%A0%E7%AB%AF%E5%84%B2%E5%AD%98%E5%BA%AB%E5%BC%B7%E5%88%B6%E8%93%8B%E5%8F%B0/</id>
+    <published>2022-10-12T07:54:10.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;稍微記錄一下不然之後又忘記。&lt;/p&gt;
+&lt;p&gt;原本 &lt;code&gt;im-nex.one&lt;/code&gt; 是用 Hugo 靜態網頁產生器去做首頁，後來部落格決定搬來這位置之後，就想說把原本的 Hugo</summary>
+        
+      
+    
+    
+    
+    <category term="程式撰寫" scheme="https://blog.nesquate.tw/categories/%E7%A8%8B%E5%BC%8F%E6%92%B0%E5%AF%AB/"/>
+    
+    
+    <category term="Git" scheme="https://blog.nesquate.tw/tags/Git/"/>
+    
+    <category term="版本控制" scheme="https://blog.nesquate.tw/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Debian 從 sid 到 Experimental 到 Linux 6.0 RC</title>
+    <link href="https://blog.nesquate.tw/2022/10/10/debian-%E5%BE%9E-sid-%E5%88%B0-experimental-%E5%88%B0-linux-6-0-rc/"/>
+    <id>https://blog.nesquate.tw/2022/10/10/debian-%E5%BE%9E-sid-%E5%88%B0-experimental-%E5%88%B0-linux-6-0-rc/</id>
+    <published>2022-10-10T07:52:10.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;為了安裝 Linux 6.0 的紀錄。&lt;/p&gt;
+&lt;p&gt;這邊只介紹官方作法，也只推薦官方作法，因為單獨安裝首先會碰到套件依賴問題。由於 Debian 需要將更新頻道切換到</summary>
+        
+      
+    
+    
+    
+    <category term="系統維運" scheme="https://blog.nesquate.tw/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://blog.nesquate.tw/tags/Linux/"/>
+    
+    <category term="Debian" scheme="https://blog.nesquate.tw/tags/Debian/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>不在分割表上的 ext4</title>
+    <link href="https://blog.nesquate.tw/2022/08/21/%E4%B8%8D%E5%9C%A8%E5%88%86%E5%89%B2%E8%A1%A8%E4%B8%8A%E7%9A%84-ext4/"/>
+    <id>https://blog.nesquate.tw/2022/08/21/%E4%B8%8D%E5%9C%A8%E5%88%86%E5%89%B2%E8%A1%A8%E4%B8%8A%E7%9A%84-ext4/</id>
+    <published>2022-08-21T07:59:00.000Z</published>
+    <updated>2023-06-07T09:49:02.487Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;我已經忘記我當初是怎麼分割資料碟了，只知道是跟 EndeavourOS 安裝的時候一起格式化。&lt;/p&gt;
+&lt;p&gt;最近因為遊戲需求逐漸增加而把 Windows 灌回自己的</summary>
+        
+      
+    
+    
+    
+    <category term="系統維運" scheme="https://blog.nesquate.tw/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/"/>
+    
+    
+    <category term="Linux" scheme="https://blog.nesquate.tw/tags/Linux/"/>
+    
+    <category term="EndeavourOS" scheme="https://blog.nesquate.tw/tags/EndeavourOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Minecraft 改存檔名稱，請留意一下 level.dat...</title>
+    <link href="https://blog.nesquate.tw/2022/07/31/minecraft-%E6%94%B9%E5%AD%98%E6%AA%94%E5%90%8D%E7%A8%B1%EF%BC%8C%E8%AB%8B%E7%95%99%E6%84%8F%E4%B8%80%E4%B8%8B-level-dat/"/>
+    <id>https://blog.nesquate.tw/2022/07/31/minecraft-%E6%94%B9%E5%AD%98%E6%AA%94%E5%90%8D%E7%A8%B1%EF%BC%8C%E8%AB%8B%E7%95%99%E6%84%8F%E4%B8%80%E4%B8%8B-level-dat/</id>
+    <published>2022-07-31T08:24:00.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;會有這問題，主要是因為我經營的伺服器所使用的 &lt;a href=&quot;https://github.com/Xujiayao/MCDiscordChat&quot;&gt;MCDiscordChat&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    <category term="Minecraft" scheme="https://blog.nesquate.tw/categories/Minecraft/"/>
+    
+    
+    <category term="Minecraft" scheme="https://blog.nesquate.tw/tags/Minecraft/"/>
+    
+    <category term="level.dat" scheme="https://blog.nesquate.tw/tags/level-dat/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期</title>
+    <link href="https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/"/>
+    <id>https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/</id>
+    <published>2022-07-28T08:28:00.000Z</published>
+    <updated>2023-06-07T09:49:02.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Fabric API 新版 Lifecycle 的幾個比較重要的生命週期（依照 &lt;code&gt;println()&lt;/code&gt; （Kotlin)</summary>
+        
+      
+    
+    
+    
+    <category term="Minecraft" scheme="https://blog.nesquate.tw/categories/Minecraft/"/>
+    
+    
+    <category term="Fabric" scheme="https://blog.nesquate.tw/tags/Fabric/"/>
+    
+    <category term="Minecraft" scheme="https://blog.nesquate.tw/tags/Minecraft/"/>
+    
+  </entry>
+  
+</feed>

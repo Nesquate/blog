@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="從2018&#x2F;4的AOSP編譯開始，Sony官方開始強制使用dm-verity和&#x2F;data加密。 而這樣會發生什麼問題呢？使用dm-verity會增加安裝Magisk的難度，畢竟這機制是一開機就會驗證是否有修改系統。不裝Magisk就無法root、或是安裝如Xposed等systemless模組。 &#x2F;data強制加密將會導致TWRP無法使用（閃退），經過XDA大神及本人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XZP (AOSP) 關閉dm-verity及&#x2F;data強制加密">
+<meta property="og:url" content="https://blog.nesquate.tw/2018/06/16/xzp-aosp-%E9%97%9C%E9%96%89dm-verity%E5%8F%8A-data%E5%BC%B7%E5%88%B6%E5%8A%A0%E5%AF%86/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="從2018&#x2F;4的AOSP編譯開始，Sony官方開始強制使用dm-verity和&#x2F;data加密。 而這樣會發生什麼問題呢？使用dm-verity會增加安裝Magisk的難度，畢竟這機制是一開機就會驗證是否有修改系統。不裝Magisk就無法root、或是安裝如Xposed等systemless模組。 &#x2F;data強制加密將會導致TWRP無法使用（閃退），經過XDA大神及本人">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2018-06-16T05:46:24.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.487Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="XZP">
+<meta property="article:tag" content="&#x2F;data">
+<meta property="article:tag" content="disable">
+<meta property="article:tag" content="dm-verity">
+<meta property="article:tag" content="forceencryption">
+<meta property="article:tag" content="sony">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2018/06/16/xzp-aosp-%E9%97%9C%E9%96%89dm-verity%E5%8F%8A-data%E5%BC%B7%E5%88%B6%E5%8A%A0%E5%AF%86/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2018/06/16/xzp-aosp-%E9%97%9C%E9%96%89dm-verity%E5%8F%8A-data%E5%BC%B7%E5%88%B6%E5%8A%A0%E5%AF%86/","path":"2018/06/16/xzp-aosp-關閉dm-verity及-data強制加密/","title":"XZP (AOSP) 關閉dm-verity及/data強制加密"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>XZP (AOSP) 關閉dm-verity及/data強制加密 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E9%96%89dm-verity"><span class="nav-number">1.</span> <span class="nav-text">關閉dm-verity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#setup-dm-verity-configs"><span class="nav-number"></span> <span class="nav-text">setup dm-verity configs.</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E9%96%89-x2F-data%E5%BC%B7%E5%88%B6%E5%8A%A0%E5%AF%86"><span class="nav-number">1.</span> <span class="nav-text">關閉&#x2F;data強制加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#repo-sync%E8%A1%9D%E7%AA%81"><span class="nav-number">2.</span> <span class="nav-text">repo sync衝突</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2018/06/16/xzp-aosp-%E9%97%9C%E9%96%89dm-verity%E5%8F%8A-data%E5%BC%B7%E5%88%B6%E5%8A%A0%E5%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="XZP (AOSP) 關閉dm-verity及/data強制加密 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          XZP (AOSP) 關閉dm-verity及/data強制加密
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2018-06-16 13:46:24" itemprop="dateCreated datePublished" datetime="2018-06-16T13:46:24+08:00">2018-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B3%BB%E7%B5%B1%E7%B6%AD%E9%81%8B/" itemprop="url" rel="index"><span itemprop="name">系統維運</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>從2018&#x2F;4的AOSP編譯開始，Sony官方開始強制使用dm-verity和&#x2F;data加密。 而這樣會發生什麼問題呢？使用dm-verity會增加安裝Magisk的難度，畢竟這機制是一開機就會驗證是否有修改系統。不裝Magisk就無法root、或是安裝如Xposed等systemless模組。 &#x2F;data強制加密將會導致TWRP無法使用（閃退），經過XDA大神及本人的實測，關閉&#x2F;data強制加密後TWRP就可以使用了。這應該是TWRP的一個bug，只能等待修正。</p>
+<span id="more"></span>
+<p>所以這篇筆記文就誕生了。</p>
+<h2 id="關閉dm-verity"><a href="#關閉dm-verity" class="headerlink" title="關閉dm-verity"></a>關閉dm-verity</h2><p>關閉dm-verity有兩個部份要動：Kernel和Platform 同步完原始碼之後，切換到目錄至kernel&#x2F;sony&#x2F;msm&#x2F;arch&#x2F;arm64&#x2F;configs下，找到「aosp_yoshino_maple_defconfig」並且打開。 以dm-verity搜尋應該會找到這幾個： [code] CONFIG_DM_VERITY&#x3D;y CONFIG_DM_VERITY_FEC&#x3D;y CONFIG_DM_VERITY_AVB&#x3D;y CONFIG_DM_ANDROID_VERITY&#x3D;y [&#x2F;code] <strong>請把他們全部調成「n」並且存檔</strong>，Kernel的部份就完成了。 接著是Platform的部份，將目錄切換到device&#x2F;sony&#x2F;yoshino底下，開啟platform.mk 移動到文件的最後一行，應該會看到： [code]</p>
+<h1 id="setup-dm-verity-configs"><a href="#setup-dm-verity-configs" class="headerlink" title="setup dm-verity configs."></a>setup dm-verity configs.</h1><p>PRODUCT_SYSTEM_VERITY_PARTITION :&#x3D; &#x2F;dev&#x2F;block&#x2F;platform&#x2F;soc&#x2F;1da4000.ufshc&#x2F;by-name&#x2F;system $(call inherit-product, build&#x2F;target&#x2F;product&#x2F;verity.mk) [&#x2F;code] <strong>把後兩行以「#」為開頭註解掉並且存檔</strong>，之後重新編譯就完成關閉dm-verity了。</p>
+<h2 id="關閉-x2F-data強制加密"><a href="#關閉-x2F-data強制加密" class="headerlink" title="關閉&#x2F;data強制加密"></a>關閉&#x2F;data強制加密</h2><p>需要修改Partition map。 首先目錄切換到device&#x2F;sony&#x2F;yoshino&#x2F;rootdir&#x2F;vendor&#x2F;etc下，找到fstab.yoshino並打開。 找到&#x2F;dev&#x2F;block&#x2F;bootdevice&#x2F;by-name&#x2F;userdata這行，後面有一串東西： [code] noatime,nosuid,nodev,barrier&#x3D;1,data&#x3D;ordered,noauto_da_alloc,errors&#x3D;panic wait,check,formattable,fileencryption&#x3D;ice,quota [&#x2F;code] 重點在fileencryption&#x3D;ice，有了此行將會導致首次開機強制加密。 <strong>要關閉的話，把它換成encryptable&#x3D;footer並且存檔</strong>，然後重新編譯。</p>
+<h2 id="repo-sync衝突"><a href="#repo-sync衝突" class="headerlink" title="repo sync衝突"></a>repo sync衝突</h2><p>遇到代碼衝突而無法同步的話，因為小的還不太懂git指令，我的作法是把修改的檔案砍掉再執行repo sync，然後再重新修改一次。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/XZP/" rel="tag"># XZP</a>
+              <a href="/tags/data/" rel="tag"># /data</a>
+              <a href="/tags/disable/" rel="tag"># disable</a>
+              <a href="/tags/dm-verity/" rel="tag"># dm-verity</a>
+              <a href="/tags/forceencryption/" rel="tag"># forceencryption</a>
+              <a href="/tags/sony/" rel="tag"># sony</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/04/15/sony-xepria-xz-premium-drm-fix-apply-manual/" rel="prev" title="Sony Xperia XZ Premium DRM FIX手動套用方法">
+                  <i class="fa fa-chevron-left"></i> Sony Xperia XZ Premium DRM FIX手動套用方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/21/escargot-msn-server-%E7%A7%81%E6%9C%89msn%E4%BC%BA%E6%9C%8D%E5%99%A8/" rel="next" title="Escargot MSN Server - 私有MSN伺服器">
+                  Escargot MSN Server - 私有MSN伺服器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

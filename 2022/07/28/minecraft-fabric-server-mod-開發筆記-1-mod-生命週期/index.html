@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/site_assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/site_assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/site_assets/favicon-16x16.png">
+  <link rel="mask-icon" href="/site_assets/safari-pinned-tab.svg" color="#222">
+  <link rel="manifest" href="/site_assets/site.webmanifest">
+  <meta name="google-site-verification" content="DcyWJq2xh7WR6yKiPYMtdJFBXXWBg9-fH4bO_oz3dls">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.17.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"utterances","storage":true,"lazyload":false,"nav":null,"activeClass":"utterances"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Fabric API 新版 Lifecycle 的幾個比較重要的生命週期（依照 println() （Kotlin) 印出結果來記錄）  ServerLifecycleEvents.SERVER_STARTING: 發生在 “Starting minecraft server version xxx” 之前，在 Fabric Loader 載入之後 官方在相關 class 檔案內的註解為在 Pla">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期">
+<meta property="og:url" content="https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/">
+<meta property="og:site_name" content="美代子隨筆">
+<meta property="og:description" content="Fabric API 新版 Lifecycle 的幾個比較重要的生命週期（依照 println() （Kotlin) 印出結果來記錄）  ServerLifecycleEvents.SERVER_STARTING: 發生在 “Starting minecraft server version xxx” 之前，在 Fabric Loader 載入之後 官方在相關 class 檔案內的註解為在 Pla">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2022-07-28T08:28:00.000Z">
+<meta property="article:modified_time" content="2023-06-07T09:49:02.483Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Fabric">
+<meta property="article:tag" content="Minecraft">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/","path":"2022/07/28/minecraft-fabric-server-mod-開發筆記-1-mod-生命週期/","title":"Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期 | 美代子隨筆</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2M8NYBWVD"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"G-E2M8NYBWVD","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="美代子隨筆" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">美代子隨筆</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/site_assets/me.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">隨興寫寫</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">55</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/nesquate" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;nesquate" rel="noopener me" target="_blank"><i class="fab fa-instagram fa-fw"></i></a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">個人首頁</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://blog.nesquate.tw/2022/07/28/minecraft-fabric-server-mod-%E9%96%8B%E7%99%BC%E7%AD%86%E8%A8%98-1-mod-%E7%94%9F%E5%91%BD%E9%80%B1%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/site_assets/me.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美代子隨筆">
+      <meta itemprop="description" content="隨興寫寫">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期 | 美代子隨筆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Minecraft Fabric Server Mod 開發筆記 - (1) Mod 生命週期
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2022-07-28 16:28:00" itemprop="dateCreated datePublished" datetime="2022-07-28T16:28:00+08:00">2022-07-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Minecraft/" itemprop="url" rel="index"><span itemprop="name">Minecraft</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>Fabric API 新版 Lifecycle 的幾個比較重要的生命週期（依照 <code>println()</code> （Kotlin) 印出結果來記錄）</p>
+<ul>
+<li><code>ServerLifecycleEvents.SERVER_STARTING</code>:<ul>
+<li>發生在 “Starting minecraft server version xxx” 之前，在 Fabric Loader 載入之後</li>
+<li>官方在相關 class 檔案內的註解為在 <code>PlayerManager</code> 載入之前 (<code>PlayerManager</code> 用來載入 OP、黑白名單等玩家相關名單)</li>
+<li>猜測適用於自訂方塊載入、可能對存檔內容初始化有影響的內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STARTED</code>:<ul>
+<li>發生在 “Done (x.xxxs)! For help, type “help””之後</li>
+<li>官方表示此時存檔已經載入完畢</li>
+<li>猜測適用於管理玩家、存檔後續設定、網路相關服務的啟動等內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STOPPING</code>:<ul>
+<li>在觸發 <code>/stop</code> 指令後的瞬間發生</li>
+<li>官方表示此時網路連線並未中斷，存檔、玩家資料等仍可以進行操作</li>
+<li>猜測適用於停止網路相關服務、針對伺服器停止時玩家的行為等內容</li>
+</ul>
+</li>
+<li><code>ServerLifecycleEvents.SERVER_STOPPED</code>:<ul>
+<li>發生於存檔已經儲存完畢之時</li>
+<li>官方表示此時存檔、玩家資料等已經無法再存取</li>
+<li>猜測適用於非常底層的卸載動作</li>
+</ul>
+</li>
+<li><code>(不在任何生命週期內)</code><ul>
+<li>發生於 datafixer 載入後的瞬間</li>
+<li>目前我還不知道這週期可以做什麼</li>
+</ul>
+</li>
+</ul>
+<p><code>onInitialize()</code> 的程式碼：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onInitialize</span><span class="params">()</span></span> &#123;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STARTING.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server starting&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STARTED.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server started&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STOPPING.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server stopping&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        ServerLifecycleEvents.SERVER_STOPPED.register &#123; server: MinecraftServer -&gt;</span><br><span class="line">            println(<span class="string">&quot;Happened on server stopped&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        println(<span class="string">&quot;Hello world!&quot;</span>)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>輸出結果:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">[14:00:14] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.19 with Fabric Loader 0.14.8</span><br><span class="line">[14:00:14] [main/INFO] (FabricLoader) Loading 37 mods:</span><br><span class="line">    - dimmanager 0.1.0</span><br><span class="line">    - fabric 0.58.0+1.19</span><br><span class="line">    - fabric-api-base 0.4.9+e62f51a3a9</span><br><span class="line">    - fabric-api-lookup-api-v1 1.6.7+9ff28f40a9</span><br><span class="line">    - fabric-biome-api-v1 9.0.14+b2a4a624a9</span><br><span class="line">    - fabric-command-api-v2 2.1.2+0d55f585a9</span><br><span class="line">    - fabric-content-registries-v0 3.2.1+07df213ea9</span><br><span class="line">    - fabric-convention-tags-v1 1.0.8+37622d24a9</span><br><span class="line">    - fabric-crash-report-info-v1 0.2.3+bd0a0d4aa9</span><br><span class="line">    - fabric-data-generation-api-v1 5.1.2+a680b9b4a9</span><br><span class="line">    - fabric-dimensions-v1 2.1.28+a6d2f785a9</span><br><span class="line">    - fabric-entity-events-v1 1.4.16+9ff28f40a9</span><br><span class="line">    - fabric-events-interaction-v0 0.4.26+9ff28f40a9</span><br><span class="line">    - fabric-game-rule-api-v1 1.0.19+18990361a9</span><br><span class="line">    - fabric-gametest-api-v1 1.0.33+e62f51a3a9</span><br><span class="line">    - fabric-item-api-v1 1.5.5+35a03c43a9</span><br><span class="line">    - fabric-item-groups-v0 0.3.26+9ff28f40a9</span><br><span class="line">    - fabric-language-kotlin 1.8.2+kotlin.1.7.10</span><br><span class="line">    - fabric-lifecycle-events-v1 2.1.0+33fbc738a9</span><br><span class="line">    - fabric-loot-api-v2 1.1.1+03a4e568a9</span><br><span class="line">    - fabric-message-api-v1 1.0.1+513f4a59a9</span><br><span class="line">    - fabric-mining-level-api-v1 2.1.11+33fbc738a9</span><br><span class="line">    - fabric-networking-api-v1 1.1.0+442de8b8a9</span><br><span class="line">    - fabric-object-builder-api-v1 4.0.8+9ff28f40a9</span><br><span class="line">    - fabric-particles-v1 1.0.8+dc39553aa9</span><br><span class="line">    - fabric-registry-sync-v0 0.9.18+23c4cfefa9</span><br><span class="line">    - fabric-rendering-data-attachment-v1 0.3.12+9ff28f40a9</span><br><span class="line">    - fabric-rendering-fluids-v1 3.0.5+9ff28f40a9</span><br><span class="line">    - fabric-resource-conditions-api-v1 2.0.9+e62f51a3a9</span><br><span class="line">    - fabric-resource-loader-v0 0.5.6+5f1a85e0a9</span><br><span class="line">    - fabric-screen-handler-api-v1 1.2.7+9ff28f40a9</span><br><span class="line">    - fabric-transfer-api-v1 2.0.9+e62f51a3a9</span><br><span class="line">    - fabric-transitive-access-wideners-v1 1.1.1+9e7660c6a9</span><br><span class="line">    - fabricloader 0.14.8</span><br><span class="line">    - fantasy 0.4.5+1.19</span><br><span class="line">    - java 17</span><br><span class="line">    - minecraft 1.19</span><br><span class="line">[14:00:14] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/home/nesquate/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.11.4+mixin.0.8.5/c1dc27696aa4006e492c2485c9ccbcb26045a971/sponge-mixin-0.11.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16</span><br><span class="line">[14:00:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17</span><br><span class="line">[14:00:16] [main/WARN] (FileUtil) Configuration conflict: there is more than one oshi.properties file on the classpath</span><br><span class="line">[14:00:16] [main/WARN] (FileUtil) Configuration conflict: there is more than one oshi.architecture.properties file on the classpath</span><br><span class="line">[14:00:19] [main/INFO] (Minecraft) Building unoptimized datafixer</span><br><span class="line">[14:00:22] [main/INFO] (Minecraft) [STDOUT]: Hello world!</span><br><span class="line">[14:00:22] [main/INFO] (Minecraft) Environment: authHost=&#x27;https://authserver.mojang.com&#x27;, accountsHost=&#x27;https://api.mojang.com&#x27;, sessionHost=&#x27;https://sessionserver.mojang.com&#x27;, servicesHost=&#x27;https://api.minecraftservices.com&#x27;, name=&#x27;PROD&#x27;</span><br><span class="line">[14:00:24] [main/INFO] (Minecraft) Loaded 7 recipes</span><br><span class="line">[14:00:25] [main/INFO] (Minecraft) Loaded 1179 advancements</span><br><span class="line">[14:00:26] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 63 new biomes in 3.226 ms</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server starting</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.19</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Loading properties</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Generating keypair</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Using epoll channel type</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Preparing level &quot;world&quot;</span><br><span class="line">[14:00:26] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%</span><br><span class="line">[14:00:30] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 31%</span><br><span class="line">[14:00:31] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 93%</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) Time elapsed: 4557 ms</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) Done (4.925s)! For help, type &quot;help&quot;</span><br><span class="line">[14:00:31] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server started</span><br><span class="line">stop</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Stopping the server</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server stopping</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Stopping server</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Saving players</span><br><span class="line">[14:08:03] [Server thread/INFO] (Minecraft) Saving worlds</span><br><span class="line">[14:08:04] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:overworld</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:the_end</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) Saving chunks for level &#x27;ServerLevel[world]&#x27;/minecraft:the_nether</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (world): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved</span><br><span class="line">[14:08:05] [Server thread/INFO] (Minecraft) [STDOUT]: Happened on server stopped</span><br></pre></td></tr></table></figure>
+
+<p>了解這些生命週期可以讓我順利取得 Server 的實體，以便進行後續的 Coding。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Fabric/" rel="tag"># Fabric</a>
+              <a href="/tags/Minecraft/" rel="tag"># Minecraft</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/13/%E5%9C%A8-arch-linux-%E5%AE%89%E8%A3%9D%E6%9C%80%E6%96%B0%E7%89%88%E7%9A%84-line-%E7%B8%BD%E6%95%B4%E7%90%86/" rel="prev" title="在 Arch Linux 安裝最新版的 LINE 總整理">
+                  <i class="fa fa-chevron-left"></i> 在 Arch Linux 安裝最新版的 LINE 總整理
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/31/minecraft-%E6%94%B9%E5%AD%98%E6%AA%94%E5%90%8D%E7%A8%B1%EF%BC%8C%E8%AB%8B%E7%95%99%E6%84%8F%E4%B8%80%E4%B8%8B-level-dat/" rel="next" title="Minecraft 改存檔名稱，請留意一下 level.dat...">
+                  Minecraft 改存檔名稱，請留意一下 level.dat... <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nesquate</span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"pathname","theme":"preferred-color-scheme"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
