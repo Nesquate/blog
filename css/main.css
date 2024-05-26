@@ -3,7 +3,7 @@
   --content-bg-color: none;
   --card-bg-color: rgba(128,128,128,0.45);
   --text-color: #fff;
-  --blockquote-color: #666;
+  --blockquote-color: #b3b3b3;
   --link-color: rgba(255,255,255,0.6);
   --link-hover-color: #fff;
   --brand-color: #fff;
@@ -1231,7 +1231,7 @@ pre code {
     transition: all 0.2s ease-in-out;
   }
   .links-of-author a::before {
-    background: #a76c2a;
+    background: #32ffff;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2892,6 +2892,9 @@ body {
 .footer,
 .post-meta {
   color: var(--text-color);
+}
+blockquote {
+  background-color: rgba(83,83,83,0.555);
 }
 header.header {
   background: none;
