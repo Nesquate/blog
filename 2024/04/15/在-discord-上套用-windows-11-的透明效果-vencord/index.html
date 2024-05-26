@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="完工效果  這邊使用了第三方佈景主題 Translucence + Vencord + Mica For Everyone 才有這樣的效果。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在 Discord 上套用 Windows 11 的透明效果（Vencord）">
+<meta property="og:url" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/index.html">
+<meta property="og:site_name" content="blog-nesquate">
+<meta property="og:description" content="完工效果  這邊使用了第三方佈景主題 Translucence + Vencord + Mica For Everyone 才有這樣的效果。">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-195813.png">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-200758.png">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-200825.png">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-201203.png">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-204317.png">
+<meta property="article:published_time" content="2024-04-15T12:49:41.000Z">
+<meta property="article:modified_time" content="2024-05-26T08:00:51.171Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Discord">
+<meta property="article:tag" content="Vencord">
+<meta property="article:tag" content="Windows 11">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-195813.png">
+
+
+<link rel="canonical" href="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/","path":"2024/04/15/在-discord-上套用-windows-11-的透明效果-vencord/","title":"在 Discord 上套用 Windows 11 的透明效果（Vencord）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>在 Discord 上套用 Windows 11 的透明效果（Vencord） | blog-nesquate</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="blog-nesquate" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">blog-nesquate</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">隨想隨寫</p>
+      <img class="custom-logo-image" src="/images/logo.png" alt="blog-nesquate">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%B7%A5%E6%95%88%E6%9E%9C"><span class="nav-number">1.</span> <span class="nav-text">完工效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%9F%E5%8B%95-Vesktop-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">啟動 Vesktop 的透明效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Mica-For-Everyone"><span class="nav-number">4.</span> <span class="nav-text">設定 Mica For Everyone</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%88%E6%99%AF%E4%B8%BB%E9%A1%8C%E4%BF%AE%E6%94%B9"><span class="nav-number">5.</span> <span class="nav-text">佈景主題修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%8A%98%E8%AC%9D"><span class="nav-number">7.</span> <span class="nav-text">銘謝</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/images/logo.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">我是 Nesquate / 宮本美代子</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">All social links</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wiki.nesquate.tw/" title="https:&#x2F;&#x2F;wiki.nesquate.tw" rel="noopener" target="_blank">Wiki</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.nesquate.tw/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog-nesquate">
+      <meta itemprop="description" content="我是 Nesquate / 宮本美代子">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="在 Discord 上套用 Windows 11 的透明效果（Vencord） | blog-nesquate">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在 Discord 上套用 Windows 11 的透明效果（Vencord）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-04-15 20:49:41" itemprop="dateCreated datePublished" datetime="2024-04-15T20:49:41+08:00">2024-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">應用程式</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="完工效果"><a href="#完工效果" class="headerlink" title="完工效果"></a>完工效果</h3><img data-src="/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-195813.png" class="" title="alt-text">
+
+<p>這邊使用了第三方佈景主題 Translucence + Vencord + Mica For Everyone 才有這樣的效果。</p>
+<span id="more"></span>
+<h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><ul>
+<li>需要預先安裝 Vencord 官方提供的 <a target="_blank" rel="noopener" href="https://github.com/Vencord/Vesktop">Vesktop</a>，只給官方 Discord 客戶端打上 Vencord 的 Patch 的話，最重要的透明效果將不會運作。<strong>使用第三方 Discord 客戶端須自負相關風險</strong>。本文提到的 Vesktop 版本為 1.5.1。</li>
+<li>需要安裝 <a target="_blank" rel="noopener" href="https://github.com/MicaForEveryone/MicaForEveryone">Mica For Everyone</a>，此軟體需要先安裝 <a target="_blank" rel="noopener" href="https://dotnet.microsoft.com/en-us/download/dotnet/3.1">.NET Core 3.1 Runtime</a> 才可以運作。本文提到的 Mica For Everyone 版本為 1.3.1.2。</li>
+<li><a target="_blank" rel="noopener" href="https://betterdiscord.app/theme/Translucence">Translucence 佈景主題</a> + 一點修改，相關修改後面會教你。</li>
+</ul>
+<h3 id="啟動-Vesktop-的透明效果"><a href="#啟動-Vesktop-的透明效果" class="headerlink" title="啟動 Vesktop 的透明效果"></a>啟動 Vesktop 的透明效果</h3><p>點開 _Discord 設定 -&gt; Vencord_，將 <strong>Enable Custom CSS</strong> 選項啟用。</p>
+<img data-src="/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-200758.png" class="" title="alt-text">
+
+<p>之後點開底下的 <em>Vesktop Settings</em> 選項，將畫面定位到 <em>Transparency Options</em> 選項，選擇 Acrylic 或 Mica 其中一個選項（這邊我選 Acrylic 選項）。</p>
+<img data-src="/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-200825.png" class="" title="alt-text">
+
+<p>然後到 T_hemes -&gt; Online Themes_ 頁面，將 Translucence 佈景主題的 CSS 地址貼上（在上面的連結裡面有最新 CSS 地址），此時佈景主題應該會自動套用。</p>
+<p>之後點選 _Local Themes -&gt; Edit QuickCSS_，將以下內容貼入視窗內，此步驟是為了要把背景圖片去掉，才可以顯示視窗本身的透明效果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    <span class="attr">--app-bg</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最後輸入快捷鍵 <strong>Ctrl + Shift + I</strong> 開啟 DevTools，點選 <em>Console</em> 標籤按鈕然後複製貼上以下內容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vencord</span>.<span class="property">Settings</span>.<span class="property">transparentUNSAFE_USE_AT_OWN_RISK</span> = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>（如果 Console 不允許你複製貼上，請在底下的輸入框輸入 <code>allow pasting</code>）</p>
+<p>這樣 Vesktop 的部分就設定好了，請點選工作列狀態區的 Vesktop Icon 右鍵 -&gt; Relaunch 完整重啟 Vesktop，以便啟用相關設定。</p>
+<h3 id="設定-Mica-For-Everyone"><a href="#設定-Mica-For-Everyone" class="headerlink" title="設定 Mica For Everyone"></a>設定 Mica For Everyone</h3><p>設定 Mica For Everyone 就沒那麼多步驟了，步驟如下：</p>
+<ol>
+<li>開啟 Mica For Everyone，點選_左下角加號符號 -&gt; 處理程序規則_，輸入 <code>Vesktop</code> 後按下建立</li>
+<li>_模糊類型_選擇<strong>壓克力</strong>，其他都不要動</li>
+</ol>
+<p>以下是設定參考視窗：</p>
+<img data-src="/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-201203.png" class="" title="alt-text">
+
+<p>當 Mica For Everyone 設定好之後，你會馬上看到透明特效在 Vesktop 程式內展現。</p>
+<h3 id="佈景主題修改"><a href="#佈景主題修改" class="headerlink" title="佈景主題修改"></a>佈景主題修改</h3><p>你可以到 <a target="_blank" rel="noopener" href="https://bdeditor.dev/theme/translucence">BetterDiscord 的 Theme Editor</a> 進行修改，記得 <em>Background Image</em> 選擇 <strong>Transparent Background</strong> 就好，不然背景圖片會蓋掉視窗透明效果，其他任你改。</p>
+<p>改完之後按下 Download 會有輸入佈景主題名稱的輸入框，這邊建議選擇 <strong>Copy CSS</strong> 然後把內容丟到 <em>Discord 設定 -&gt; Themes -&gt; Edit QuickCSS</em> 裡面，可以少下載一次檔案。</p>
+<img data-src="/2024/04/15/%E5%9C%A8-discord-%E4%B8%8A%E5%A5%97%E7%94%A8-windows-11-%E7%9A%84%E9%80%8F%E6%98%8E%E6%95%88%E6%9E%9C-vencord/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2-2024-04-15-204317.png" class="" title="alt-text">
+
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/BetterDiscord/comments/1065blb/using_mica_for_everyone_for_transparent_discord/">Using Mica For Everyone for Transparent Discord Theme : r&#x2F;BetterDiscord</a></li>
+</ul>
+<h3 id="銘謝"><a href="#銘謝" class="headerlink" title="銘謝"></a>銘謝</h3><p>感謝 Eric (@e0pwr) 和 Ayazo (@ayazo) 在相關討論上提供更多設定建議和資源。</p>
+<p>感謝卡蘇拉 (@kazura._.) 協助 CSS 相關設定的測試。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://x.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Discord/" rel="tag"># Discord</a>
+              <a href="/tags/Vencord/" rel="tag"># Vencord</a>
+              <a href="/tags/Windows-11/" rel="tag"># Windows 11</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_email"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/04/04/%E8%BF%91%E6%B3%81-ver-20240404/" rel="prev" title="近況 ver.20240404">
+                  <i class="fa fa-angle-left"></i> 近況 ver.20240404
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/05/26/Windows-11-%E9%80%83%E4%BA%A1%E6%97%A5/" rel="next" title="Windows 11 逃亡日">
+                  Windows 11 逃亡日 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nesquate</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"title","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

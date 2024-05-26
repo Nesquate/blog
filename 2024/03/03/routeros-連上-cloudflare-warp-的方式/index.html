@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="其實直接在電腦上安裝 Cloudflare WARP 客戶端會比較省事，但是個人有 RouterOS 上的 DNS Server 需求（因為我有些 DNS Record 只有經過我的 Router 上的 DNS Server 才解析得到），所以就必須想辦法在 RouterOS 上實現連上 Cloudflare WARP 的方法。 還好 Cloudflare WARP 背後的連線方式是 WireGu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RouterOS 連上 Cloudflare WARP 的方式">
+<meta property="og:url" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="blog-nesquate">
+<meta property="og:description" content="其實直接在電腦上安裝 Cloudflare WARP 客戶端會比較省事，但是個人有 RouterOS 上的 DNS Server 需求（因為我有些 DNS Record 只有經過我的 Router 上的 DNS Server 才解析得到），所以就必須想辦法在 RouterOS 上實現連上 Cloudflare WARP 的方法。 還好 Cloudflare WARP 背後的連線方式是 WireGu">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_101131.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_101246.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_110740.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_110842.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112049.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112238.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112854.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112349.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112953.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113013.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113017.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113113.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133035.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133043.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133104.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133138.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133301.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133304.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133326.png.webp">
+<meta property="og:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_135431.png.webp">
+<meta property="article:published_time" content="2024-03-03T05:57:11.000Z">
+<meta property="article:modified_time" content="2024-05-26T08:00:51.168Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Cloudflare WARP">
+<meta property="article:tag" content="RouterOS">
+<meta property="article:tag" content="WireGuard">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_101131.png.webp">
+
+
+<link rel="canonical" href="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/","path":"2024/03/03/routeros-連上-cloudflare-warp-的方式/","title":"RouterOS 連上 Cloudflare WARP 的方式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RouterOS 連上 Cloudflare WARP 的方式 | blog-nesquate</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="blog-nesquate" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">blog-nesquate</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">隨想隨寫</p>
+      <img class="custom-logo-image" src="/images/logo.png" alt="blog-nesquate">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%91-Cloudflare-%E5%8F%96%E5%BE%97-WARP-%E7%9A%84%E9%80%A3%E7%B7%9A%E8%B3%87%E8%A8%8A"><span class="nav-number">1.</span> <span class="nav-text">向 Cloudflare 取得 WARP 的連線資訊</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-RouterOS-%E4%B8%8A%E5%BB%BA%E7%AB%8B-WireGuard-%E8%A8%AD%E5%AE%9A"><span class="nav-number">2.</span> <span class="nav-text">在 RouterOS 上建立 WireGuard 設定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-IPv4-%E8%B7%AF%E7%94%B1%E4%BB%A5%E5%8F%8A%E9%98%B2%E7%81%AB%E7%89%86"><span class="nav-number">3.</span> <span class="nav-text">設定 IPv4 路由以及防火牆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv6-%E8%B5%B0-Cloudflare-WARP"><span class="nav-number">4.</span> <span class="nav-text">IPv6 走 Cloudflare WARP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B6%E5%B7%A5%E8%88%87%E6%B8%AC%E8%A9%A6"><span class="nav-number">5.</span> <span class="nav-text">收工與測試</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">參考資料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/images/logo.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">我是 Nesquate / 宮本美代子</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">All social links</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wiki.nesquate.tw/" title="https:&#x2F;&#x2F;wiki.nesquate.tw" rel="noopener" target="_blank">Wiki</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.nesquate.tw/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog-nesquate">
+      <meta itemprop="description" content="我是 Nesquate / 宮本美代子">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RouterOS 連上 Cloudflare WARP 的方式 | blog-nesquate">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RouterOS 連上 Cloudflare WARP 的方式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-03-03 13:57:11" itemprop="dateCreated datePublished" datetime="2024-03-03T13:57:11+08:00">2024-03-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%B6%B2%E8%B7%AF/" itemprop="url" rel="index"><span itemprop="name">網路</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>其實直接在電腦上安裝 Cloudflare WARP 客戶端會比較省事，但是個人有 RouterOS 上的 DNS Server 需求（因為我有些 DNS Record 只有經過我的 Router 上的 DNS Server 才解析得到），所以就必須想辦法在 RouterOS 上實現連上 Cloudflare WARP 的方法。</p>
+<p>還好 Cloudflare WARP 背後的連線方式是 WireGuard，剛好 RouterOS 7 以後原生支援 WireGuard，我們就用它來連線。</p>
+<span id="more"></span>
+<h3 id="向-Cloudflare-取得-WARP-的連線資訊"><a href="#向-Cloudflare-取得-WARP-的連線資訊" class="headerlink" title="向 Cloudflare 取得 WARP 的連線資訊"></a>向 Cloudflare 取得 WARP 的連線資訊</h3><p>首先，你需要 <a target="_blank" rel="noopener" href="https://github.com/ViRb3/wgcf">wgcf</a> 這個第三方工具才有辦法產生出 Cloudflare WARP 的 WireGuard 組態資訊，這邊不說明安裝步驟。</p>
+<p>安裝好 wgcf 之後，你可以先向 Cloudflare 註冊目前的電腦：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wgcf register</span><br></pre></td></tr></table></figure>
+
+<p>選擇 YES 之後應該就會產生 <code>wgcf-account.toml</code> 檔案。</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_101131.png.webp" class="" title="alt">
+
+<p>之後，要透過註冊資訊產生出 WireGuard 連線資訊：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wgcf generate</span><br></pre></td></tr></table></figure>
+
+<p>這樣就會產生 <code>wgcf-profile.conf</code> 檔案，待會設定會用到它。</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_101246.png.webp" class="" title="alt">
+
+<h3 id="在-RouterOS-上建立-WireGuard-設定"><a href="#在-RouterOS-上建立-WireGuard-設定" class="headerlink" title="在 RouterOS 上建立 WireGuard 設定"></a>在 RouterOS 上建立 WireGuard 設定</h3><p>接著就是進入到 RouterOS 後台做設定，我建議這邊使用 WinBox 可以避免掉 WebFig 的一些問題（例如 IP Route 頁面的 bug）。</p>
+<p>首先進入 WireGuard 頁面新增一個 Interface ，名稱可自訂，基本上只要填 Private Key 和 MTU 就好，其他都不用動：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_110740.png.webp" class="" title="alt">
+
+<p>接著填寫 Peer，這邊可以根據 <code>wgcf-profile.conf</code> 的內容進行填寫，不過 Endpoint 我選擇取得 <code>engage.cloudflareclient.com</code> 的真實 IP（如果有看一些中國翻牆文章會知道其實 Cloudflare 有一小段網域都是 Endpoint，我是 ping 出哪個 IP 就用哪個） ：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_110842.png.webp" class="" title="alt">
+
+<p>最後，進入 <em>Interfaces -&gt; Interface List</em> 新增一個 Member，把剛剛新增的 WireGuard Interface 加入到 WAN 裡面：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112049.png.webp" class="" title="alt">
+
+<h3 id="設定-IPv4-路由以及防火牆"><a href="#設定-IPv4-路由以及防火牆" class="headerlink" title="設定 IPv4 路由以及防火牆"></a>設定 IPv4 路由以及防火牆</h3><p>因為 WireGuard 主要連線還是走 IPv4，所以必須用流量標記的方式，才有辦法讓 WireGuard 確保連線的同時也能夠把其他連線通通導向 WireGuard 的 Interface 上。</p>
+<p>首先，先至 <em>IP -&gt; Addresses</em> 上新增 Cloudflare WARP 內部網路的 IP 位置，並且指定 Interface 為 WireGuard，IP 位置的部份跟 <code>wgcf-profile.conf</code> 的內容大致相同，但這邊須使用 &#x2F;24 而非 &#x2F;32：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112238.png.webp" class="" title="alt">
+
+<p>接著至 <em>Routing -&gt; Tables</em> 裡面，新增一個 Routing table，之後做流量標記的時候會用到，FIB 選項記得勾選：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112854.png.webp" class="" title="alt">
+
+<p>接著是 <em>IP -&gt; Routes</em> 的設定，由於要將所有流量導向 Cloudflare WARP，因此 Dst. Address 設定為 <code>0.0.0.0/0</code>，Gateway 必須選擇剛剛新建的 WireGuard interface，Distance 必須設為 <code>1</code> 或更小（或是看你原本的 Gateway 的 Distance 是多少直接減一也可以），Routing Table 則是選擇剛剛新增的 Table 名稱：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112349.png.webp" class="" title="alt">
+
+<p>接著進入 <em>IP -&gt; Firewall -&gt; NAT</em> 設定，預設來說應該會有一組 Out. Interface List 為 <code>WAN</code> 的 Masquerade 設定，如果有的話就不用動它。如果沒有，那你就要手動新增，內容如下：</p>
+<ul>
+<li>在 General 頁面，Chain 為 <code>srcnat</code>，Out. Interface List 為 <code>WAN</code></li>
+<li>在 Action 頁面，Action 為 <code>masquerade</code></li>
+</ul>
+<p>正確設定的話，應該會長這個樣子（請忽略已經呈現灰色停用狀態的設定）：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_112953.png.webp" class="" title="alt">
+
+<p>緊接著在 Firewall 視窗內切換至 Mangle 的頁面，新增一條設定。首先 General Chain 必須設定為 <code>prerouting</code> ，Src. 和 Dst. Address 必須設定為你自己內部網路的 IP 位置（這邊以 <code>192.168.1.0/24</code> 為例），記得 Dst. Address 前面的驚嘆號必須點出來，表示「對所有來源為 <code>192.168.1.0/24</code>，但目的地非 <code>192.168.1.0/24</code> 的封包做處理」：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113013.png.webp" class="" title="alt">
+
+<p>接著切換至 Action 頁面，Action 須選擇 <code>mark routing</code>，New Routing Mark 則必須選擇剛剛新增的 Routing table，最後記得把 Passthrough 取消，就可以新增這個設定了：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113017.png.webp" class="" title="alt">
+
+<p>最後切換到 Filter Rules，把 Fasttrack 的設定給停用，否則 Mangle 規則會失效：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_113113.png.webp" class="" title="alt">
+
+<p>這樣一來 IPv4 部份就設定完成。</p>
+<h3 id="IPv6-走-Cloudflare-WARP"><a href="#IPv6-走-Cloudflare-WARP" class="headerlink" title="IPv6 走 Cloudflare WARP"></a>IPv6 走 Cloudflare WARP</h3><p>Cloudflare WARP 連上後，不管你的原本的網路有沒有 IPv6 連線能力，你都可以瀏覽 IPv6 網站，因為 Cloudflare WARP 有給予 IPv6 連線能力。</p>
+<p>不過 Cloudflare WARP 只給我們一個 IPv6 地址，這邊必須使用 NAT66 來處理。老實說 IPv6 地址多到實在不需要用到 NAT66，沒辦法，畢竟 Cloudflare 大概也不會預期到我們會這樣用。</p>
+<p>首先不免俗的還是要新增 Address，至 <em>IPv6 -&gt; Addresses</em> 下新增。首先先新增 wgcf 裡面給的 IPv6 地址（2606 開頭），Interface 指向 WireGuard 的 Interface，記得 Advertise 要取消勾選：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133035.png.webp" class="" title="alt">
+
+<p>因為會用到 NAT66，必須宣告一個類似於 IPv4 的 Private Address 的東東，這邊再新增一組地址，以 fd00 為開頭，此類地址為唯一區域地址（Unique Local Address，ULA），並且要對 Bridge 上所有 Interface 做 advertise（不然沒人知道）：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133043.png.webp" class="" title="alt">
+
+<p>緊接著查看 <em>IPv6 -&gt; ND</em> 裡面應該有一組 Interface 為 Bridge 的設定，如果沒有的話可以照下圖的設定新增：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133104.png.webp" class="" title="alt">
+
+<p>接著一樣要設定 Routing，至 <em>IPv6 -&gt; Routes</em> 內新增一組 Dst. Address 為 <code>::/0</code> ，Interface 為 WireGuard interface 的設定，其他設定可以不用動：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133138.png.webp" class="" title="alt">
+
+<p>接著去 <em>IPv6 -&gt; Firewall -&gt; NAT</em> 設定 NAT66。首先新增一組設定，General 內 Chain 為 <code>srcnat</code>，Out Interface 為 WireGuard 的 Interface：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133301.png.webp" class="" title="alt">
+
+<p>接著切到 Action 頁面，Action 為 <code>src nat</code>，To Address 填寫 WireGuard 設定檔當中 2606 開頭的地址，然後按下 OK 新增：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133304.png.webp" class="" title="alt">
+
+<p>最後去 <em>IPv6 -&gt; Settings</em> 把 Disable IPv6 取消勾選就大功告成：</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_133326.png.webp" class="" title="alt">
+
+<h3 id="收工與測試"><a href="#收工與測試" class="headerlink" title="收工與測試"></a>收工與測試</h3><p>當一切都設定好之後，去 <a target="_blank" rel="noopener" href="https://test-ipv6.com/">test-ipv6.com</a> 測試一下看看 IPv4 和 IPv6 是否都有跑出來，且服務商為 Cloudflare，如果都是的話就代表設定正確，可以開心上網了。</p>
+<img data-src="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/Screenshot_20240303_135431.png.webp" class="" title="alt">
+
+<h3 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://настройка-микротик.укр/cloudflare-warp-v-mikrotik-nastrojka-besplatnogo-vpn/">Cloudflare Warp настройка в MikroTik Бесплатный Wireguard</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.animmouse.com/p/get-ipv6-connectivity-on-mikrotik-using-cloudflare-warp/">Get IPv6 Connectivity on MikroTik Using Cloudflare WARP - Anim Mouse</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.mikrotik.com/wiki/Manual:IP/Fasttrack">Manual:IP&#x2F;Fasttrack - MikroTik Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.mikrotik.com/wiki/Manual:IP/Route">Manual:IP&#x2F;Route - MikroTik Wiki</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://x.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Cloudflare-WARP/" rel="tag"># Cloudflare WARP</a>
+              <a href="/tags/RouterOS/" rel="tag"># RouterOS</a>
+              <a href="/tags/WireGuard/" rel="tag"># WireGuard</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_email"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/19/android-%E6%B3%A8%E9%9F%B3%E8%BC%B8%E5%85%A5%E6%B3%95%E5%80%91/" rel="prev" title="Android 注音輸入法們">
+                  <i class="fa fa-angle-left"></i> Android 注音輸入法們
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/04/04/%E8%BF%91%E6%B3%81-ver-20240404/" rel="next" title="近況 ver.20240404">
+                  近況 ver.20240404 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nesquate</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"title","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>

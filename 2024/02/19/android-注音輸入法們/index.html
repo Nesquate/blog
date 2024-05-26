@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha256-XOqroi11tY4EFQMR9ZYwZWKj5ZXiftSx36RRuC3anlA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.css" integrity="sha256-gkQVf8UKZgQ0HyuxL/VnacadJ+D2Kox2TCEBuNQg5+w=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-minimal.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.nesquate.tw","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.20.0","exturl":false,"sidebar":{"position":"right","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":true,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜尋...","empty":"我們無法找到任何有關 ${query} 的搜索結果","hits_time":"${hits} 找到 ${time} 個結果","hits":"找到 ${hits} 個結果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="稍微整理一下在 Android 底下有用過的注音輸入法，還有一些個人看法。因為是個人看法，所以使用結論上一定會跟其他人有出入，看看就好。 最近把 Pixel 6a 刷成 GrapheneOS，正式跟很多方便的功能說拜拜。然而每次刷機都會遇到注音輸入法的問題，就剛好來整理一下目前有使用過的注音輸入法方案好了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 注音輸入法們">
+<meta property="og:url" content="http://blog.nesquate.tw/2024/02/19/android-%E6%B3%A8%E9%9F%B3%E8%BC%B8%E5%85%A5%E6%B3%95%E5%80%91/index.html">
+<meta property="og:site_name" content="blog-nesquate">
+<meta property="og:description" content="稍微整理一下在 Android 底下有用過的注音輸入法，還有一些個人看法。因為是個人看法，所以使用結論上一定會跟其他人有出入，看看就好。 最近把 Pixel 6a 刷成 GrapheneOS，正式跟很多方便的功能說拜拜。然而每次刷機都會遇到注音輸入法的問題，就剛好來整理一下目前有使用過的注音輸入法方案好了。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2024-02-19T08:10:42.000Z">
+<meta property="article:modified_time" content="2024-05-26T08:00:51.168Z">
+<meta property="article:author" content="Nesquate">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="fcitx5">
+<meta property="article:tag" content="同文輸入法">
+<meta property="article:tag" content="新酷音">
+<meta property="article:tag" content="樸實注音鍵盤">
+<meta property="article:tag" content="洋蔥注音">
+<meta property="article:tag" content="超注音">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.nesquate.tw/2024/02/19/android-%E6%B3%A8%E9%9F%B3%E8%BC%B8%E5%85%A5%E6%B3%95%E5%80%91/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-TW","comments":true,"permalink":"http://blog.nesquate.tw/2024/02/19/android-%E6%B3%A8%E9%9F%B3%E8%BC%B8%E5%85%A5%E6%B3%95%E5%80%91/","path":"2024/02/19/android-注音輸入法們/","title":"Android 注音輸入法們"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android 注音輸入法們 | blog-nesquate</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="blog-nesquate" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">blog-nesquate</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">隨想隨寫</p>
+      <img class="custom-logo-image" src="/images/logo.png" alt="blog-nesquate">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜尋" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>標籤</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分類</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜尋
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜尋..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gboard"><span class="nav-number">1.</span> <span class="nav-text">Gboard</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%96%87%E8%BC%B8%E5%85%A5%E6%B3%95-%E6%B4%8B%E8%94%A5%E6%B3%A8%E9%9F%B3"><span class="nav-number">2.</span> <span class="nav-text">同文輸入法+洋蔥注音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E6%B3%A8%E9%9F%B3"><span class="nav-number">3.</span> <span class="nav-text">超注音</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%B8%E5%AF%A6%E6%B3%A8%E9%9F%B3%E9%8D%B5%E7%9B%A4"><span class="nav-number">4.</span> <span class="nav-text">樸實注音鍵盤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fcitx5-android"><span class="nav-number">5.</span> <span class="nav-text">fcitx5-android</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%80%E4%BB%A5%E7%8F%BE%E9%9A%8E%E6%AE%B5%E2%80%A6"><span class="nav-number">6.</span> <span class="nav-text">所以現階段…?</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Nesquate"
+      src="/images/logo.png">
+  <p class="site-author-name" itemprop="name">Nesquate</p>
+  <div class="site-description" itemprop="description">我是 Nesquate / 宮本美代子</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Nesquate" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:nesquate@gmail.com" title="E-Mail → mailto:nesquate@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://x.com/Nesquate" title="Twitter → https:&#x2F;&#x2F;x.com&#x2F;Nesquate" rel="noopener me" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/nesquate.tw" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;nesquate.tw" rel="noopener me" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://youtube.com/@Nesquate" title="YouTube → https:&#x2F;&#x2F;youtube.com&#x2F;@Nesquate" rel="noopener me" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hant" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="sidebar-inner sidebar-blogroll">
+      <div class="links-of-blogroll animated">
+        <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+          Links
+        </div>
+        <ul class="links-of-blogroll-list">
+            <li class="links-of-blogroll-item">
+              <a href="https://nesquate.tw/" title="https:&#x2F;&#x2F;nesquate.tw" rel="noopener" target="_blank">All social links</a>
+            </li>
+            <li class="links-of-blogroll-item">
+              <a href="https://wiki.nesquate.tw/" title="https:&#x2F;&#x2F;wiki.nesquate.tw" rel="noopener" target="_blank">Wiki</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+        <div class="pjax">
+        </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="http://blog.nesquate.tw/2024/02/19/android-%E6%B3%A8%E9%9F%B3%E8%BC%B8%E5%85%A5%E6%B3%95%E5%80%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo.png">
+      <meta itemprop="name" content="Nesquate">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog-nesquate">
+      <meta itemprop="description" content="我是 Nesquate / 宮本美代子">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android 注音輸入法們 | blog-nesquate">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android 注音輸入法們
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">發表於</span>
+
+      <time title="創建時間：2024-02-19 16:10:42" itemprop="dateCreated datePublished" datetime="2024-02-19T16:10:42+08:00">2024-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分類於</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%87%89%E7%94%A8%E7%A8%8B%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">應用程式</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>稍微整理一下在 Android 底下有用過的注音輸入法，還有一些個人看法。因為是個人看法，所以使用結論上一定會跟其他人有出入，看看就好。</p>
+<p>最近把 Pixel 6a 刷成 GrapheneOS，正式跟很多方便的功能說拜拜。然而每次刷機都會遇到注音輸入法的問題，就剛好來整理一下目前有使用過的注音輸入法方案好了。</p>
+<span id="more"></span>
+
+<h2 id="Gboard"><a href="#Gboard" class="headerlink" title="Gboard"></a>Gboard</h2><p>目前用的最順手的輸入法。</p>
+<p>不過選字方面其實很詭異，精準度不如 2018 年以前的 Google 注音輸入法。老實說如果 Google 注音輸入法沒有停止開發，根本就不會想選 Gboard。</p>
+<p>不過 Gboard 功能很多就是了，像是內建剪貼簿、翻譯還有上下左右這些是我喜歡的功能。</p>
+<p>但就如各家 Google 服務一樣，Gboard 蒐集的個資體感上有點多。</p>
+<h2 id="同文輸入法-洋蔥注音"><a href="#同文輸入法-洋蔥注音" class="headerlink" title="同文輸入法+洋蔥注音"></a>同文輸入法+洋蔥注音</h2><p>基於 RIME，自訂性頗高的輸入法。</p>
+<p>但最大的缺點是你必須花大把的時間去設定，還有版本不相容的問題（洋蔥注音需要搭配比較舊一點同文輸入法才能用），對於急用的我很勸退。</p>
+<p>不然他是繼 Gboard 來說算免費又好用的輸入法，然後又不會蒐集過多個資。</p>
+<h2 id="超注音"><a href="#超注音" class="headerlink" title="超注音"></a>超注音</h2><p>Android 2.x 時期有用過，那時候手感上很接近現在的 Gboard，但選字比 Gboard 好的程度。</p>
+<p>可惜他要付費，那時候太窮只能用內購破解的方式使用。Google 注音輸入法出來之後覺得還是不要再傷害開發者就跳過去了。</p>
+<p>之後 Google 注音輸入法一路碾壓超注音，就沒打算買它了。</p>
+<h2 id="樸實注音鍵盤"><a href="#樸實注音鍵盤" class="headerlink" title="樸實注音鍵盤"></a>樸實注音鍵盤</h2><p>第二常用的鍵盤，如果手機整個 Google 服務都拔掉的話我會用它。</p>
+<p>基於新酷音的開源方案，該有的功能也都有，雖然沒有像 Gboard 那麼多功能就是了。</p>
+<p>沒有注音容錯還好，但在虛擬鍵盤上沒有注音快拼是硬傷，讓我在手機打字速度上變很慢。可以的話希望作者能夠開發出類似的功能。</p>
+<p>實體鍵盤就無所謂了，在這種情境下沒有注音快拼反而比較好用。</p>
+<h2 id="fcitx5-android"><a href="#fcitx5-android" class="headerlink" title="fcitx5-android"></a>fcitx5-android</h2><p>有用過 Linux 應該都有聽過 Fcitx5 輸入法框架，這個專案是在 Android 上的實踐。</p>
+<p>雖然有新酷音的外掛，但是虛擬鍵盤上還是英文鍵盤，跑不出注音。後來才知道目前（2024&#x2F;02&#x2F;19）還沒有實做出個別輸入法自訂虛擬鍵盤排版的功能，雖然可以用英文鍵盤盲打，但是打起來很痛苦。</p>
+<p>但如果得以發展起來的話，我應該會跳槽去用它看看。</p>
+<h2 id="所以現階段…"><a href="#所以現階段…" class="headerlink" title="所以現階段…?"></a>所以現階段…?</h2><p>現階段還是只好乖乖用 Gboard，如果有實體鍵盤的話，那就是樸實注音鍵盤。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>歡迎關注我的其它發布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="https://x.com/Nesquate">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/fcitx5/" rel="tag"># fcitx5</a>
+              <a href="/tags/%E5%90%8C%E6%96%87%E8%BC%B8%E5%85%A5%E6%B3%95/" rel="tag"># 同文輸入法</a>
+              <a href="/tags/%E6%96%B0%E9%85%B7%E9%9F%B3/" rel="tag"># 新酷音</a>
+              <a href="/tags/%E6%A8%B8%E5%AF%A6%E6%B3%A8%E9%9F%B3%E9%8D%B5%E7%9B%A4/" rel="tag"># 樸實注音鍵盤</a>
+              <a href="/tags/%E6%B4%8B%E8%94%A5%E6%B3%A8%E9%9F%B3/" rel="tag"># 洋蔥注音</a>
+              <a href="/tags/%E8%B6%85%E6%B3%A8%E9%9F%B3/" rel="tag"># 超注音</a>
+          </div>
+
+        
+  <div class="social-like a2a_kit a2a_kit_size_32 a2a_default_style">
+    <a class="a2a_dd" target="_blank" rel="noopener" href="https://www.addtoany.com/share"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_email"></a>
+  </div>
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/15/arch-linux-%E7%AF%A9%E5%87%BA-aur-debug-package-%E7%9A%84%E6%96%B9%E6%B3%95/" rel="prev" title="Arch Linux 篩出 AUR Debug Package 的方法">
+                  <i class="fa fa-angle-left"></i> Arch Linux 篩出 AUR Debug Package 的方法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/03/03/routeros-%E9%80%A3%E4%B8%8A-cloudflare-warp-%E7%9A%84%E6%96%B9%E5%BC%8F/" rel="next" title="RouterOS 連上 Cloudflare WARP 的方式">
+                  RouterOS 連上 Cloudflare WARP 的方式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments utterances-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nesquate</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="回到頂端">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.31/fancybox/fancybox.umd.js" integrity="sha256-a+H7FYzJv6oU2hfsfDGM2Ohw/cR9v+hPfxHCLdmCrE8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+  <script src="/js/third-party/addtoany.js"></script>
+
+  
+
+
+
+
+<script class="next-config" data-name="utterances" type="application/json">{"enable":true,"repo":"Nesquate/blog","issue_term":"title","theme":"github-light"}</script>
+<script src="/js/third-party/comments/utterances.js"></script>
+
+</body>
+</html>
